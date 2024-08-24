@@ -1,0 +1,25 @@
+* {
+    outline: 1px solid tomato
+}
+
+ul {
+    list-style: none;
+}
+
+
+.movie-container {
+    padding: 4px;
+    
+}
+
+.img-thumb {
+    width: 300px;
+    height: 400px;
+    
+}
+
+.img-thumb img {
+    display: block;
+    width: 100%;
+    object-fit: contain;
+}
