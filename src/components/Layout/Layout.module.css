@@ -1,0 +1,42 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layoutHeader,
+.layoutFooter {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.layoutContent {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.layoutSidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.layoutMain {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Адаптивність для малих екранів */
+@media (max-width: 768px) {
+  .layoutContent {
+    flex-direction: column;
+  }
+
+  .layoutSidebar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

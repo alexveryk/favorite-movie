@@ -1,21 +1,19 @@
-import "./style.css"
+import styles from "./Movie.module.css";
 
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { getTrending } from '../../services/api';
+import { useState } from "react";
+import { useEffect } from "react";
+import { getTrending } from "../../services/api";
 
 export const Movie = () => {
   const [loading, setLoading] = useState(false);
   const [movies, setReviews] = useState([]);
-
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const response = await getTrending();
-console.log(response.data.results)
+        console.log(response.data.results);
         setReviews(response.data.results);
       } catch (error) {
         console.log(error);
@@ -30,27 +28,20 @@ console.log(response.data.results)
     <>
       {loading && <p>Loading...</p>}
       {movies.length > 0 ? (
-        <ul>
-          {movies.map(movie => {
+        <ul className={styles.movieList}>
+          {movies.map((movie) => {
             return (
-              <li key={movie.id}>
-
-                <div class="movie-container">
-                  <div class='img-thumb'>
-                    <img src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}  alt="" />
+              <li className={styles.movieItem} key={movie.id}>
+                <div className={styles.movieContainer}>
+                  <div className={styles.movieContainer__thumb}>
+                    <img
+                      loading="lazy"
+                      src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                      alt=""
+                    />
                   </div>
-                    <span>{movie.release_date}</span>
-                    <span>{movie.title}</span>
-                    <span>{movie.overview}</span>
+                  <span className={styles.movie__name}>{movie.title}</span>
                 </div>
-
-
-                {/* <img src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`} alt="" />
-                <p>{movie.release_date}</p>
-                <p>{movie.title}</p>
-                <p>{movie.overview}</p> */}
-                
-                
               </li>
             );
           })}

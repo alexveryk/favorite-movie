@@ -1,18 +1,15 @@
-
-import { useState } from 'react'
-import './App.css'
-import { Movie } from './components/Movie/Movie'
-
+import "./App.css";
+import { Movie } from "./components/Movie/Movie";
+import { Layout } from "./components/Layout/Layout";
 
 function App() {
-
-
   return (
     <>
-    <Movie/>
-       
+      <Layout>
+        <Movie />
+      </Layout>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
