@@ -32,37 +32,3 @@
     width: 100%; /* На дуже малих екранах елементи займають всю ширину */
   }
 }
-
-.movieContainer {
-  position: relative;
-  padding: 4px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  /* background-color: red; */
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-.movieContainer__thumb {
-  width: 100%;
-  height: auto;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.movieContainer__thumb > img {
-  display: block;
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-  object-position: 50% 50%;
-}
-
-.movie__name {
-  display: block;
-  padding: 8px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #3a4d3c;
-}

@@ -1,12 +1,12 @@
 import "./App.css";
-import { Movie } from "./components/Movie/Movie";
 import { Layout } from "./components/Layout/Layout";
+import { MoviesList } from "./components/MoviesList/MoviesList";
 
 function App() {
   return (
     <>
       <Layout>
-        <Movie />
+        <MoviesList />
       </Layout>
     </>
   );

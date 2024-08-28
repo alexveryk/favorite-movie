@@ -1,11 +1,11 @@
-import styles from "./Movie.module.css";
+import styles from "./MoviesList.module.css";
 
 import { useState } from "react";
 import { useEffect } from "react";
 import { getTrending } from "../../services/api";
-import { Rating } from "../Rating/Rating";
+import { MovieCard } from "../MovieCard/MovieCard";
 
-export const Movie = () => {
+export const MoviesList = () => {
   const [loading, setLoading] = useState(false);
   const [movies, setReviews] = useState([]);
 
@@ -33,26 +33,13 @@ export const Movie = () => {
           {movies.map((movie) => {
             return (
               <li className={styles.movieItem} key={movie.id}>
-                <div className={styles.movieContainer}>
-                  <div className={styles.movieContainer__thumb}>
-                    <img
-                      loading="lazy"
-                      src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                      alt=""
-                    />
-                  </div>
-                  <span className={styles.movie__name}>{movie.title}</span>
-                  <Rating
-                    rating={movie.vote_average}
-                    title={movie.vote_count}
-                  />
-                </div>
+                <MovieCard movie={movie} />
               </li>
             );
           })}
         </ul>
       ) : (
-        <p>We don't have any reviews for this movie</p>
+        <p>We don&apos;t have any reviews for this movie</p>
       )}
     </>
   );
