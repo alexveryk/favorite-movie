@@ -3,6 +3,7 @@ import styles from "./Movie.module.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getTrending } from "../../services/api";
+import { Rating } from "../Rating/Rating";
 
 export const Movie = () => {
   const [loading, setLoading] = useState(false);
@@ -41,6 +42,10 @@ export const Movie = () => {
                     />
                   </div>
                   <span className={styles.movie__name}>{movie.title}</span>
+                  <Rating
+                    rating={movie.vote_average}
+                    title={movie.vote_count}
+                  />
                 </div>
               </li>
             );
