@@ -15,3 +15,10 @@ export const getTrending = async () => {
   );
   return response;
 };
+
+export const getMovieDetails = async (movie_id) => {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movie_id}?api_key=${API_KEY}&language=${options.iso_639_1}`
+  );
+  return response;
+};

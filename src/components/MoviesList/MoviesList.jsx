@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { getTrending } from "../../services/api";
 import { MovieCard } from "../MovieCard/MovieCard";
+import { MovieDetails } from "../MovieDetails/MovieDetails";
 
 export const MoviesList = () => {
   const [loading, setLoading] = useState(false);
