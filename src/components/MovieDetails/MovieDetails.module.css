@@ -1,0 +1,27 @@
+* {
+  outline: 1px solid tomato;
+}
+
+.movieDetailsContainer {
+  width: 100%;
+  height: 649px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.movieDetailsContainer::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.6), transparent 70%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.movieCardContainer {
+  width: 384px;
+}

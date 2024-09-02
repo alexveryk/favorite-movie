@@ -12,8 +12,6 @@ export const MovieCard = ({ movie }) => {
           alt=""
         />
       </div>
-      <span className={styles.movie__name}>{movie.title}</span>
-      <Rating rating={movie.vote_average} title={movie.vote_count} />
     </div>
   );
 };

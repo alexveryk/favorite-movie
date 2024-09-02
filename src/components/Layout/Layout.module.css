@@ -9,7 +9,6 @@
   background-color: #333;
   color: white;
   text-align: center;
-  padding: 20px;
 }
 
 .layoutContent {
@@ -21,12 +20,10 @@
 .layoutSidebar {
   width: 250px;
   background-color: #f4f4f4;
-  padding: 20px;
 }
 
 .layoutMain {
   flex: 1;
-  padding: 20px;
 }
 
 /* Адаптивність для малих екранів */
