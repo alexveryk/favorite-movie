@@ -7,8 +7,8 @@ function App() {
   return (
     <>
       <Layout>
-        {/* <MoviesList /> */}
-        <MovieDetails id={"786892"} />
+        <MoviesList />
+        {/* <MovieDetails id={"786892"} /> */}
       </Layout>
     </>
   );

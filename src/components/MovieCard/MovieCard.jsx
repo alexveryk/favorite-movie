@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { Rating } from "../Rating/Rating";
 import styles from "./MovieCard.module.css";
 
 export const MovieCard = ({ movie }) => {

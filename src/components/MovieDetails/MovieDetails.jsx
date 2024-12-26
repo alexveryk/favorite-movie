@@ -31,10 +31,10 @@ export const MovieDetails = ({ id }) => {
       }}>
       {loading && <div>Loading...</div>}
       <div className={styles.movieCardContainer}>
-        <MovieCard movie={movieDetails} />
+        {/* <MovieCard movie={movieDetails} /> */}
       </div>
-      {/* <h1>{movieDetails.title}</h1>
-      <div>{movieDetails.overview}</div> */}
+      <h1>{movieDetails.title}</h1>
+      <div>{movieDetails.overview}</div>
     </div>
   );
 };
