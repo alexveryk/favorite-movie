@@ -22,9 +22,7 @@ export const MovieCard = ({ movie }) => {
         <p className={styles.movieContainer__rating}>
           Рейтинг: {movie.vote_average}
         </p>
-        <button className={styles.movieContainer__button}>
-          Більше про фільм
-        </button>
+        <button className={styles.movieContainer__button}>Більше...</button>
       </div>
     </div>
   );
