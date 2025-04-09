@@ -4,6 +4,7 @@ import { Layout } from "./components/Layout/Layout";
 import { Home } from "./pages/Home/Home";
 import { Movies } from "./pages/Movies/Movies";
 import { Serials } from "./pages/Serials/Serials";
+import { NotFound } from "./components/NotFound/NotFound";
 
 // import { MoviesList } from "./components/MoviesList/MoviesList";
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/serials" element={<Serials />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </>

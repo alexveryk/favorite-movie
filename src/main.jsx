@@ -6,7 +6,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter basename="/favorite-movie">
+    <BrowserRouter basename={window.location.pathname}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
