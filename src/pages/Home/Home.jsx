@@ -1,6 +1,7 @@
+// import { MoviesList } from "../../components/MoviesList/MoviesList";
 import { UnderConstruction } from "../../components/UnderConstruction/UnderConstruction";
 
-export const Serials = () => {
+export const Home = () => {
   return (
     <>
       <UnderConstruction />
