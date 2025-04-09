@@ -1,11 +1,16 @@
 import PropTypes from "prop-types";
 import styles from "./MovieCard.module.css";
+import { Rating } from "../Rating/Rating";
 
 export const MovieCard = ({ movie }) => {
   console.log(movie);
   return (
     <div className={styles.movieContainer}>
       <div className={styles.movieContainer__thumb}>
+        <Rating
+          className={styles.movieContainer__rating}
+          rating={movie.vote_average}
+        />
         <img
           loading="lazy"
           src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
@@ -18,11 +23,9 @@ export const MovieCard = ({ movie }) => {
             ? movie.title.slice(0, 18) + "…"
             : movie.title}
         </h2>
-        <p className={styles.movieContainer__year}>{movie.release_date}</p>
-        <p className={styles.movieContainer__rating}>
-          Рейтинг: {movie.vote_average}
+        <p className={styles.movieContainer__year}>
+          {movie.release_date.slice(0, 4)}
         </p>
-        <button className={styles.movieContainer__button}>Більше...</button>
       </div>
     </div>
   );
@@ -34,5 +37,6 @@ MovieCard.propTypes = {
     title: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
     vote_count: PropTypes.number.isRequired,
+    release_date: PropTypes.number.isRequired,
   }).isRequired,
 };
