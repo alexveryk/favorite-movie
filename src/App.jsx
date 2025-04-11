@@ -6,8 +6,6 @@ import { Movies } from "./pages/Movies/Movies";
 import { Serials } from "./pages/Serials/Serials";
 import { NotFound } from "./components/NotFound/NotFound";
 
-// import { MoviesList } from "./components/MoviesList/MoviesList";
-
 function App() {
   return (
     <>

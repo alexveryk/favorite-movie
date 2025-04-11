@@ -1,18 +1,21 @@
-import { Link } from "react-router-dom";
-import styles from "./Menu.module.css";
+import { NavLink } from "react-router-dom";
 
 export const Menu = () => {
+  const styleNawlink = ({ isActive }) =>
+    isActive
+      ? "text-blue-500 font-semibold border-blue-500 text-2xl p-4"
+      : "text-gray-500 text-2xl p-4";
   return (
     <nav>
-      <Link to="/" className={styles.link}>
+      <NavLink to="/" className={styleNawlink}>
         Home
-      </Link>
-      <Link to="/movies" className={styles.link}>
+      </NavLink>
+      <NavLink to="/movies" className={styleNawlink}>
         Movies
-      </Link>
-      <Link to="/serials" className={styles.link}>
+      </NavLink>
+      <NavLink to="/serials" className={styleNawlink}>
         Serials
-      </Link>
+      </NavLink>
     </nav>
   );
 };
