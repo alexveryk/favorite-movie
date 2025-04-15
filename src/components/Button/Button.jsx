@@ -3,7 +3,7 @@ export const Button = ({ title, onClick }) => {
     <button
       onClick={onClick}
       type="button"
-      className="rounded-lg p-2 text-2xl border-black  shadow-lg bg-indigo-500 hover:bg-indigo-600">
+      className="px-6 py-3 text-base font-semibold text-[#dde7cc] bg-[#153d31] rounded-xl shadow-md hover:bg-[#1e4d3e] transition-colors duration-200 font-[Inter]">
       {title}
     </button>
   );

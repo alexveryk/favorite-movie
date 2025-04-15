@@ -8,28 +8,48 @@
 .layoutHeader,
 .layoutFooter {
   background-color: #333;
-  color: white;
   text-align: center;
+  width: 100%;
 }
 
 .layoutContent {
   display: flex;
   flex: 1;
   flex-direction: row;
-}
-
-.layoutSidebar {
-  width: 250px;
-  background-color: #f4f4f4;
+  justify-content: center;
 }
 
 .layoutMain {
   flex: 1;
-  padding: 12px;
+  padding: 16px;
+  max-width: 1400px;
+  width: 100%;
 }
 
-/* Адаптивність для малих екранів */
-@media (max-width: 768px) {
+.layoutSidebar {
+  background-color: #f4f4f4;
+  padding: 16px;
+  transition: all 0.3s ease;
+  width: 250px;
+}
+
+@media (max-width: 575.98px) {
+  .layoutContent {
+    flex-direction: column;
+  }
+
+  .layoutSidebar {
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 12px;
+  }
+
+  .layoutMain {
+    padding: 12px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
   .layoutContent {
     flex-direction: column;
   }

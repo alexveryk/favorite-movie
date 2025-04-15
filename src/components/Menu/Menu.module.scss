@@ -1,14 +1,26 @@
 .menu {
-  padding: 12px;
+  padding: 16px;
+  background-color: #153d31; /* Темно-зелений фон */
+  border-radius: 12px; /* Округлені кути */
 }
 
 .link {
   text-decoration: none;
-  color: white;
-  font-size: 24px;
+  color: #dde7cc; /* Світлий колір для тексту */
+  font-size: 20px; /* Трохи зменшений розмір */
   padding: 12px;
+  display: block; /* Щоб кожен пункт був на новому рядку */
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.link:hover {
+  color: #153d31; /* Темно-зелений колір на ховері */
+  background-color: #dde7cc; /* Світлий фон на ховері */
+  border-radius: 8px; /* М'якші краї під час ховера */
 }
 
 .active {
-  color: red;
+  color: #1e4d3e; /* Темно-зелений колір для активного елемента */
+  font-weight: 600; /* Товщий шрифт для активного */
+  border-bottom: 2px solid #1e4d3e; /* Лінія під активним пунктом */
 }

@@ -1,80 +1,104 @@
 .movieContainer {
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  /* border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px; */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 12px;
   border-radius: 12px;
+  width: 100%;
+  max-width: 324px;
+  margin: 0 auto;
 }
 
 .movieContainer__thumb {
   position: relative;
-  max-width: 404px;
-  height: 510px;
+  width: 100%;
+  height: auto;
   overflow: hidden;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+  aspect-ratio: 3 / 4;
 }
 
 .movieContainer__thumb > img {
   display: block;
-  height: 100%;
   width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
-}
-
-.movie__name {
-  display: block;
-  padding: 8px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #3a4d3c;
+  object-position: center;
 }
 
 .movieContainer__info {
   display: flex;
-  gap: 10px;
   flex-direction: column;
   align-items: center;
   background-color: #f2f2f2;
-  padding-bottom: 12px;
+  padding: 12px;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
 .movieContainer__title {
-  margin-top: 16px;
-  color: #262626;
-  font-size: 28px;
+  font-size: 18px;
   text-align: center;
+  margin-top: 4px;
+  color: #262626;
 }
 
 .movieContainer__year {
-  color: #262626;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
+  color: #262626;
 }
 
-.movieContainer__rating {
-}
-
-.movieContainer__button {
-  display: flex;
-  all: unset;
-  cursor: pointer;
-  width: calc(100% - 80px);
-  padding: 12px;
-  background-color: #153d31;
-  color: #dde7cc;
-  text-transform: uppercase;
-  font-weight: 600;
+.heartButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
   font-size: 24px;
-  border-radius: 8px;
-  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
-/* #153D31 background main */
-/* #102C27 backgroubd card*/
-/* #DDE7CC main text*/
-/* #74A28B  second text*/
-/* #74A28B  button*/
+
+.heartButton:hover {
+  transform: scale(1.2);
+}
+
+.heartActive {
+  color: red;
+}
+
+.heartButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.heartIcon {
+  width: 24px;
+  height: 24px;
+  transition: fill 0.2s ease;
+}
+
+.heartActive .heartIcon {
+  fill: red;
+}
+
+/* Адаптивна поведінка */
+@media (max-width: 767.98px) {
+  .movieContainer {
+    width: 100%;
+  }
+
+  .movieContainer__title {
+    font-size: 16px;
+  }
+
+  .movieContainer__year {
+    font-size: 14px;
+  }
+}
