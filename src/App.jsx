@@ -12,7 +12,6 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/alexveryk/favorite-movie" element={<Home />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/serials" element={<Serials />} />
           <Route path="*" element={<NotFound />} />
