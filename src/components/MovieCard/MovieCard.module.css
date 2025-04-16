@@ -1,104 +1,158 @@
 .movieContainer {
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 12px;
   border-radius: 12px;
-  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   max-width: 324px;
   margin: 0 auto;
+  transition: transform 0.3s ease;
 }
 
-.movieContainer__thumb {
+.movieContainer:hover {
+  transform: scale(1.02);
+}
+
+.thumb {
   position: relative;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
   aspect-ratio: 3 / 4;
+  cursor: pointer;
 }
 
-.movieContainer__thumb > img {
-  display: block;
+.thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  display: block;
 }
 
-.movieContainer__info {
+.rating {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+}
+
+.actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #f2f2f2;
-  padding: 12px;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  gap: 6px;
+  z-index: 3;
 }
 
-.movieContainer__title {
-  font-size: 18px;
-  text-align: center;
-  margin-top: 4px;
-  color: #262626;
-}
-
-.movieContainer__year {
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  color: #262626;
-}
-
-.heartButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.iconButton {
   background: none;
   border: none;
-  font-size: 24px;
+  padding: 4px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.heartButton:hover {
-  transform: scale(1.2);
+.iconButton:hover {
+  transform: scale(1.1);
 }
 
-.heartActive {
-  color: red;
-}
-
-.heartButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.heartIcon {
+.icon {
   width: 24px;
   height: 24px;
   transition: fill 0.2s ease;
 }
 
-.heartActive .heartIcon {
+.activeFavorite .icon {
   fill: red;
 }
 
-/* Адаптивна поведінка */
-@media (max-width: 767.98px) {
-  .movieContainer {
-    width: 100%;
-  }
+.activeWatched .icon {
+  fill: #3b82f6;
+}
 
-  .movieContainer__title {
+.iconButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.iconButton:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  transition: fill 0.2s ease, transform 0.2s ease;
+}
+
+.info {
+  background-color: #f2f2f2;
+  padding: 12px;
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+  color: #262626;
+  margin: 4px 0;
+  font-weight: 600;
+}
+
+.year {
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}
+
+.watchedBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(34, 197, 94, 0.9);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  fill: white;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .title {
     font-size: 16px;
   }
 
-  .movieContainer__year {
+  .year {
     font-size: 14px;
+  }
+
+  .watchedBadge {
+    font-size: 13px;
+    padding: 3px 8px;
   }
 }
