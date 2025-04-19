@@ -6,8 +6,8 @@ export const Menu = () => {
 
   const styleNavLink = ({ isActive }) =>
     isActive
-      ? "text-[#1e4d3e] font-semibold border-b-2 border-[#1e4d3e] text-2xl p-4 transition-all"
-      : "text-[#dde7cc] text-2xl p-4 hover:text-[#153d31] hover:bg-[#dde7cc] hover:border-b-2 hover:border-[#153d31] transition-all";
+      ? "text-[#51cda6] font-semibold border-b-2 border-[#51cda6] text-2xl p-4 transition-all"
+      : "text-[#dde7cc] text-2xl p-4 hover:text-[#153d31] hover:bg-[#dde7cc] transition-all";
 
   return (
     <nav className="bg-[#153d31] rounded-lg">

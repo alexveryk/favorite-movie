@@ -6,6 +6,7 @@ import axios from "axios";
 export const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
   const [credits, setCredits] = useState({ cast: [], crew: [] });
   const [videos, setVideos] = useState([]);
   const [showTrailer, setShowTrailer] = useState(false);
@@ -125,6 +126,22 @@ export const MovieDetails = () => {
                 Подивитися трейлер
               </button>
             )}
+            <div>
+              <p className="text-white font-semibold mb-1">Опис:</p>
+              <p className="text-gray-200 leading-relaxed">
+                {isOverviewExpanded
+                  ? movie.overview
+                  : movie.overview.slice(0, 200) +
+                    (movie.overview.length > 200 ? "..." : "")}
+              </p>
+              {movie.overview.length > 200 && (
+                <button
+                  className="text-sm text-yellow-400 mt-1 hover:underline"
+                  onClick={() => setIsOverviewExpanded((prev) => !prev)}>
+                  {isOverviewExpanded ? "Згорнути" : "Читати більше"}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -10,6 +10,7 @@
   background-color: #333;
   text-align: center;
   width: 100%;
+  color: white;
 }
 
 .layoutContent {
@@ -21,9 +22,10 @@
 
 .layoutMain {
   flex: 1;
-
   max-width: 1400px;
   width: 100%;
+  padding: 16px;
+  order: 1;
 }
 
 .layoutSidebar {
@@ -31,31 +33,34 @@
   padding: 16px;
   transition: all 0.3s ease;
   width: 250px;
+
+  order: 0;
 }
 
-@media (max-width: 575.98px) {
+/* Для екранів менше 1200px — сайдбар під основним контентом */
+@media (max-width: 1199.98px) {
   .layoutContent {
     flex-direction: column;
-  }
-
-  .layoutSidebar {
-    width: 100%;
-    margin-bottom: 16px;
-    padding: 12px;
   }
 
   .layoutMain {
+    width: 100%;
+    order: 1;
     padding: 12px;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .layoutContent {
-    flex-direction: column;
   }
 
   .layoutSidebar {
     width: 100%;
-    margin-bottom: 20px;
+    order: 2;
+    margin-top: 16px;
+    padding: 12px;
+  }
+}
+
+/* Для вузьких екранів */
+@media (max-width: 575.98px) {
+  .layoutMain,
+  .layoutSidebar {
+    padding: 12px;
   }
 }
