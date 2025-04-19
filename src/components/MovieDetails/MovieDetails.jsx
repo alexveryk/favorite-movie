@@ -1,21 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite, toggleWatched } from "../../store/moviesSlice"; // Corrected import
 import { getMovieDetails, getMovieCredits } from "../../services/api";
 import axios from "axios";
 
 export const MovieDetails = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+
+  // Accessing the favorites and watched arrays correctly from the Redux state
+  const favorites = useSelector((state) => state.movies.favorites);
+  const watched = useSelector((state) => state.movies.watched);
+
   const [movie, setMovie] = useState(null);
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
   const [credits, setCredits] = useState({ cast: [], crew: [] });
   const [videos, setVideos] = useState([]);
   const [showTrailer, setShowTrailer] = useState(false);
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  );
-  const [watched, setWatched] = useState(
-    JSON.parse(localStorage.getItem("watched")) || []
-  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,24 +41,6 @@ export const MovieDetails = () => {
     fetchData();
   }, [id]);
 
-  const toggleFavorite = () => {
-    const exists = favorites.some((m) => m.id === movie.id);
-    const updated = exists
-      ? favorites.filter((m) => m.id !== movie.id)
-      : [...favorites, movie];
-    localStorage.setItem("favorites", JSON.stringify(updated));
-    setFavorites(updated);
-  };
-
-  const toggleWatched = () => {
-    const exists = watched.some((m) => m.id === movie.id);
-    const updated = exists
-      ? watched.filter((m) => m.id !== movie.id)
-      : [...watched, movie];
-    localStorage.setItem("watched", JSON.stringify(updated));
-    setWatched(updated);
-  };
-
   if (!movie) return <p className="text-center">Завантаження...</p>;
 
   const director = credits.crew.find((person) => person.job === "Director");
@@ -69,8 +53,16 @@ export const MovieDetails = () => {
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
 
-  const isFavorite = favorites.some((m) => m.id === movie.id);
-  const isWatched = watched.some((m) => m.id === movie.id);
+  const isFavorite = (favorites || []).some((m) => m.id === movie.id);
+  const isWatched = (watched || []).some((m) => m.id === movie.id);
+
+  const handleFavoriteClick = () => {
+    dispatch(toggleFavorite(movie));
+  };
+
+  const handleWatchedClick = () => {
+    dispatch(toggleWatched(movie));
+  };
 
   return (
     <div
@@ -104,14 +96,14 @@ export const MovieDetails = () => {
           </p>
           <div className="flex flex-wrap gap-4 mt-4">
             <button
-              onClick={toggleFavorite}
+              onClick={handleFavoriteClick}
               className={`px-4 py-2 rounded-lg font-semibold ${
                 isFavorite ? "bg-red-600" : "bg-white text-black"
               }`}>
               {isFavorite ? "Видалити з улюбленого" : "Додати в улюблене"}
             </button>
             <button
-              onClick={toggleWatched}
+              onClick={handleWatchedClick}
               className={`px-4 py-2 rounded-lg font-semibold ${
                 isWatched ? "bg-blue-600" : "bg-white text-black"
               }`}>

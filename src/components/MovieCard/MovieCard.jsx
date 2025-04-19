@@ -2,28 +2,33 @@ import PropTypes from "prop-types";
 import styles from "./MovieCard.module.css";
 import { Rating } from "../Rating/Rating";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 
-export const MovieCard = ({
-  movie,
-  onAddToFavorites,
-  isFavorite,
-  isWatched,
-  onToggleWatched,
-}) => {
+export const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  // Отримуємо улюблені та переглянуті фільми з Redux
+  const { favorites, watched } = useSelector((state) => state.movies);
+
+  // Перевірка, чи є фільм у улюблених та переглянутих
+  const isFavorite = favorites.some((m) => m.id === movie.id);
+  const isWatched = watched.some((m) => m.id === movie.id);
+
+  // Обробники для кліків
   const handleCardClick = () => {
     navigate(`/movies/${movie.id}`);
   };
 
   const handleFavoriteClick = (evt) => {
     evt.stopPropagation();
-    onAddToFavorites(movie);
+    dispatch(toggleFavorite(movie)); // Відправляємо дію до Redux
   };
 
   const handleWatchedClick = (evt) => {
     evt.stopPropagation();
-    onToggleWatched(movie);
+    dispatch(toggleWatched(movie)); // Відправляємо дію до Redux
   };
 
   return (
@@ -114,8 +119,4 @@ MovieCard.propTypes = {
     release_date: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
-  onAddToFavorites: PropTypes.func.isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  isWatched: PropTypes.bool.isRequired,
-  onToggleWatched: PropTypes.func.isRequired,
 };

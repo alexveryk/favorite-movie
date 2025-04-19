@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getTrending } from "../../services/api";
 import { MovieCard } from "../MovieCard/MovieCard";
 import { Button } from "../Button/Button";
+import { toggleFavorite, toggleWatched } from "../../store/moviesSlice"; // Імпортуємо дії для Redux
 import styles from "./MoviesList.module.css";
 
 export const MoviesList = () => {
   const [loading, setLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
-  );
-  const [watched, setWatched] = useState(
-    JSON.parse(localStorage.getItem("watched")) || []
-  );
+
+  // Отримуємо стан улюблених та переглянутих фільмів з Redux
+  const { favorites, watched } = useSelector((state) => state.movies);
+  const dispatch = useDispatch();
 
   const isFetching = useRef(false);
 
@@ -38,23 +38,11 @@ export const MoviesList = () => {
   }, [page]);
 
   const handleAddToFavorites = (movie) => {
-    const exists = favorites.some((m) => m.id === movie.id);
-    const updated = exists
-      ? favorites.filter((m) => m.id !== movie.id)
-      : [...favorites, movie];
-
-    localStorage.setItem("favorites", JSON.stringify(updated));
-    setFavorites(updated);
+    dispatch(toggleFavorite(movie)); // Відправляємо дію до Redux
   };
 
   const handleToggleWatched = (movie) => {
-    const exists = watched.some((m) => m.id === movie.id);
-    const updated = exists
-      ? watched.filter((m) => m.id !== movie.id)
-      : [...watched, movie];
-
-    localStorage.setItem("watched", JSON.stringify(updated));
-    setWatched(updated);
+    dispatch(toggleWatched(movie)); // Відправляємо дію до Redux
   };
 
   const handleClick = () => {
@@ -63,7 +51,7 @@ export const MoviesList = () => {
 
   return (
     <>
-      {loading && <p>Завантаження...</p>}
+      {loading && <div className="spinner"></div>} {/* Спінер замість тексту */}
       {movies.length > 0 ? (
         <>
           <ul className={styles.movieList}>
