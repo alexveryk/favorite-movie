@@ -6,15 +6,14 @@ import { getDatabase } from "firebase/database";
 
 // Твоя конфігурація
 const firebaseConfig = {
-  apiKey: "AIzaSyA-hVCYe8iyWY4wrH9Koxd6yvy99D1L5eU",
-  authDomain: "favorite-movies-a9454.firebaseapp.com",
-  projectId: "favorite-movies-a9454",
-  storageBucket: "favorite-movies-a9454.firebasestorage.app",
-  messagingSenderId: "1026420303179",
-  appId: "1:1026420303179:web:7eece8a84d9e777f7174ce",
-  measurementId: "G-LLN5BHJ2BM",
-  databaseURL:
-    "https://favorite-movies-a9454-default-rtdb.europe-west1.firebasedatabase.app", // <- ДОДАЙ ЦЕ
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
 // Ініціалізація
