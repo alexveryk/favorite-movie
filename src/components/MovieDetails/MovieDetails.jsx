@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorite, toggleWatched } from "../../store/moviesSlice"; // Corrected import
+import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { getMovieDetails, getMovieCredits } from "../../services/api";
 import axios from "axios";
 
@@ -9,9 +9,10 @@ export const MovieDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  // Accessing the favorites and watched arrays correctly from the Redux state
+  // Отримуємо улюблені та переглянуті фільми з Redux
   const favorites = useSelector((state) => state.movies.favorites);
   const watched = useSelector((state) => state.movies.watched);
+  const uid = useSelector((state) => state.user.uid);
 
   const [movie, setMovie] = useState(null);
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
@@ -53,15 +54,18 @@ export const MovieDetails = () => {
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
 
-  const isFavorite = (favorites || []).some((m) => m.id === movie.id);
-  const isWatched = (watched || []).some((m) => m.id === movie.id);
+  // Перевірка на масив перед використанням .some()
+  const isFavorite =
+    Array.isArray(favorites) && favorites.some((m) => m.id === movie.id);
+  const isWatched =
+    Array.isArray(watched) && watched.some((m) => m.id === movie.id);
 
   const handleFavoriteClick = () => {
-    dispatch(toggleFavorite(movie));
+    dispatch(toggleFavorite({ movie, uid }));
   };
 
   const handleWatchedClick = () => {
-    dispatch(toggleWatched(movie));
+    dispatch(toggleWatched({ movie, uid }));
   };
 
   return (

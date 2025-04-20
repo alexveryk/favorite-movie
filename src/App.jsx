@@ -1,17 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase/firebase";
+import { auth, database } from "./firebase/firebase";
+import { ref, get } from "firebase/database";
 import { setUser, logoutUser } from "./store/userSlice";
+import { setFavorites, setWatched } from "./store/moviesSlice";
+import {
+  fetchFavoritesFromFirebase,
+  fetchWatchedFromFirebase,
+} from "./firebase/firebase";
 
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
 import { Layout } from "./components/Layout/Layout";
 import { Home } from "./pages/Home/Home";
 import { Movies } from "./pages/Movies/Movies";
 import { Serials } from "./pages/Serials/Serials";
 import { NotFound } from "./components/NotFound/NotFound";
 import { MovieDetails } from "./components/MovieDetails/MovieDetails";
+
+import "./App.css";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
 
 function App() {
@@ -19,7 +26,7 @@ function App() {
   const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         dispatch(
           setUser({
@@ -29,6 +36,13 @@ function App() {
             photoURL: user.photoURL,
           })
         );
+
+        // Завантажуємо дані про улюблені та переглянуті фільми
+        const favorites = await fetchFavoritesFromFirebase(user.uid);
+        const watched = await fetchWatchedFromFirebase(user.uid);
+
+        dispatch(setFavorites(favorites || []));
+        dispatch(setWatched(watched || []));
       } else {
         dispatch(logoutUser());
       }
@@ -37,7 +51,6 @@ function App() {
     return () => unsubscribe();
   }, [dispatch]);
 
-  // Якщо перевірка авторизації ще не завершена — показуємо лоадер
   if (!isAuthChecked) {
     return (
       <div className="loader-wrapper">

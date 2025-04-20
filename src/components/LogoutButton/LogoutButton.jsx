@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";

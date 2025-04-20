@@ -1,46 +1,23 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
-
-const MovieList = ({ movies, noMoviesMessage }) => {
-  return (
-    <div className="flex flex-wrap gap-4">
-      {movies.length > 0 ? (
-        movies.map((movie, index) => (
-          <div key={index} className="w-40 h-60 bg-[#dde7cc] rounded-md p-2">
-            <img
-              src={movie.poster}
-              alt={movie.title}
-              className="w-full h-40 object-cover rounded-md"
-            />
-            <p className="text-center text-[#153d31]">{movie.title}</p>
-          </div>
-        ))
-      ) : (
-        <p className="text-[#153d31]">{noMoviesMessage}</p>
-      )}
-    </div>
-  );
-};
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ProfileMovieList } from "../../components/ProfileMovieList/ProfileMovieList";
 
 export const UserProfile = () => {
   const { displayName, photoURL, email } = useSelector((state) => state.user);
-  const { favorites, watched } = useSelector((state) => state.movies); // отримуємо списки з Redux
+  const { favorites, watched } = useSelector((state) => state.movies);
   const navigate = useNavigate();
-
-  // Стейт для керування активною вкладкою
   const [activeTab, setActiveTab] = useState("favorites");
 
-  // Обробник для повернення на головну
   const handleBack = () => {
-    navigate("/"); // Повертає на головну
+    navigate("/");
   };
 
   return (
     <div className="max-w-[1200px] mx-auto p-6">
       <button onClick={handleBack} className="text-[#51cda6] text-xl mb-4">
-        ← Back to Home
+        ← На головну
       </button>
 
       <div className="flex flex-col items-center">
@@ -56,7 +33,6 @@ export const UserProfile = () => {
         <h1 className="text-3xl text-[#153d31]">{displayName}</h1>
         <p className="text-lg text-[#153d31] mb-4">{email}</p>
 
-        {/* Вкладки для улюблених і переглянутих фільмів */}
         <div className="flex gap-8 mb-6">
           <button
             onClick={() => setActiveTab("favorites")}
@@ -65,7 +41,7 @@ export const UserProfile = () => {
                 ? "text-[#51cda6] font-semibold"
                 : "text-[#dde7cc]"
             }`}>
-            Улюблені фільми
+            Улюблені
           </button>
           <button
             onClick={() => setActiveTab("watched")}
@@ -74,22 +50,20 @@ export const UserProfile = () => {
                 ? "text-[#51cda6] font-semibold"
                 : "text-[#dde7cc]"
             }`}>
-            Переглянуті фільми
+            Переглянуті
           </button>
         </div>
 
-        {/* Виведення фільмів в залежності від активної вкладки */}
         {activeTab === "favorites" && (
-          <MovieList
+          <ProfileMovieList
             movies={favorites}
             noMoviesMessage="У вас немає улюблених фільмів."
           />
         )}
-
         {activeTab === "watched" && (
-          <MovieList
+          <ProfileMovieList
             movies={watched}
-            noMoviesMessage="Ви не переглядали фільми."
+            noMoviesMessage="Ви ще не переглядали фільмів."
           />
         )}
 

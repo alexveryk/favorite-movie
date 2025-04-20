@@ -1,8 +1,6 @@
-// firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-// import { getAnalytics } from "firebase/analytics";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, set, get } from "firebase/database";
 
 // Твоя конфігурація
 const firebaseConfig = {
@@ -22,4 +20,40 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const database = getDatabase(app);
 
-export { auth, provider, database };
+// Функції для оновлення у Firebase
+const updateUserFavorites = (uid, favorites) => {
+  if (!uid) return;
+  const userFavoritesRef = ref(database, `users/${uid}/favorites`);
+  // Передаємо вже новий масив
+  set(userFavoritesRef, [...favorites]);
+};
+
+const updateUserWatched = (uid, watched) => {
+  if (!uid) return;
+  const userWatchedRef = ref(database, `users/${uid}/watched`);
+  set(userWatchedRef, [...watched]);
+};
+
+const fetchFavoritesFromFirebase = async (uid) => {
+  if (!uid) return [];
+  const userFavoritesRef = ref(database, `users/${uid}/favorites`);
+  const snapshot = await get(userFavoritesRef);
+  return snapshot.exists() ? Object.values(snapshot.val()) : [];
+};
+
+const fetchWatchedFromFirebase = async (uid) => {
+  if (!uid) return [];
+  const userWatchedRef = ref(database, `users/${uid}/watched`);
+  const snapshot = await get(userWatchedRef);
+  return snapshot.exists() ? Object.values(snapshot.val()) : [];
+};
+
+export {
+  auth,
+  provider,
+  database,
+  updateUserFavorites,
+  updateUserWatched,
+  fetchWatchedFromFirebase,
+  fetchFavoritesFromFirebase,
+};

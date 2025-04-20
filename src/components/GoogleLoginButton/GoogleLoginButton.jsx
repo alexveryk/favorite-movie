@@ -1,4 +1,3 @@
-import React from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider, database } from "../../firebase/firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,20 +12,18 @@ const GoogleLoginButton = () => {
   const handleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
+      const firebaseUser = result.user;
 
-      // Зберігаємо юзера в Redux
       dispatch(
         setUser({
-          uid: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL, // додано фото
+          uid: firebaseUser.uid,
+          displayName: firebaseUser.displayName,
+          email: firebaseUser.email,
+          photoURL: firebaseUser.photoURL,
         })
       );
 
-      // Перевіряємо чи є вже дані в БД
-      const userRef = ref(database, "users/" + user.uid);
+      const userRef = ref(database, "users/" + firebaseUser.uid);
       const snapshot = await get(userRef);
 
       if (snapshot.exists()) {
@@ -35,34 +32,35 @@ const GoogleLoginButton = () => {
         dispatch(setWatched(data.watched || []));
       } else {
         await set(userRef, {
-          displayName: user.displayName,
-          email: user.email,
+          displayName: firebaseUser.displayName,
+          email: firebaseUser.email,
           favorites: [],
           watched: [],
         });
       }
-
-      console.log("Успішний вхід:", user.displayName);
     } catch (error) {
       console.error("Помилка входу:", error.message);
     }
   };
 
-  // Якщо користувач залогінений — показуємо ім’я і аватар
-  if (user && user.displayName) {
+  if (user?.displayName) {
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <div className="flex items-center gap-2">
         <img
           src={user.photoURL}
           alt="User avatar"
-          style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+          className="w-8 h-8 rounded-full"
         />
         <span>{user.displayName}</span>
       </div>
     );
   }
 
-  return <button onClick={handleLogin}>Увійти через Google</button>;
+  return (
+    <button onClick={handleLogin} className="text-[#51cda6] font-medium">
+      Увійти через Google
+    </button>
+  );
 };
 
 export default GoogleLoginButton;

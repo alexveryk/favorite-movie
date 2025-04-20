@@ -11,10 +11,13 @@ export const MovieCard = ({ movie }) => {
 
   // Отримуємо улюблені та переглянуті фільми з Redux
   const { favorites, watched } = useSelector((state) => state.movies);
+  const uid = useSelector((state) => state.user.uid);
 
-  // Перевірка, чи є фільм у улюблених та переглянутих
-  const isFavorite = favorites.some((m) => m.id === movie.id);
-  const isWatched = watched.some((m) => m.id === movie.id);
+  // Перевірка, чи є favorites та watched масивами
+  const isFavorite =
+    Array.isArray(favorites) && favorites.some((m) => m.id === movie.id);
+  const isWatched =
+    Array.isArray(watched) && watched.some((m) => m.id === movie.id);
 
   // Обробники для кліків
   const handleCardClick = () => {
@@ -23,12 +26,12 @@ export const MovieCard = ({ movie }) => {
 
   const handleFavoriteClick = (evt) => {
     evt.stopPropagation();
-    dispatch(toggleFavorite(movie)); // Відправляємо дію до Redux
+    dispatch(toggleFavorite({ movie, uid })); // Відправляємо дію до Redux
   };
 
   const handleWatchedClick = (evt) => {
     evt.stopPropagation();
-    dispatch(toggleWatched(movie)); // Відправляємо дію до Redux
+    dispatch(toggleWatched({ movie, uid })); // Відправляємо дію до Redux
   };
 
   return (
