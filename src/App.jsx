@@ -20,6 +20,7 @@ import { MovieDetails } from "./components/MovieDetails/MovieDetails";
 
 import "./App.css";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,7 +67,13 @@ function App() {
         <Route path="/movies" element={<Movies />} />
         <Route path="/serials" element={<Serials />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
-        <Route path="/profile" element={<UserProfile />} />
+
+        {/* Використовуємо PrivateRoute для захисту профілю */}
+        <Route
+          path="/profile"
+          element={<PrivateRoute element={<UserProfile />} />}
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

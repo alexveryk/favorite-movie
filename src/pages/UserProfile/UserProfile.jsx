@@ -1,74 +1,123 @@
-import { useSelector } from "react-redux";
-import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ProfileMovieList } from "../../components/ProfileMovieList/ProfileMovieList";
+import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
+import { logoutUser } from "../../store/userSlice";
+import { MovieCard } from "../../components/MovieCard/MovieCard";
+import { Button } from "../../components/Button/Button";
+import { MovieCount } from "../../components/MovieCount/MovieCount";
+import { useNavigate } from "react-router-dom"; // Імпортуємо useNavigate
 
 export const UserProfile = () => {
-  const { displayName, photoURL, email } = useSelector((state) => state.user);
-  const { favorites, watched } = useSelector((state) => state.movies);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { favorites = [], watched = [] } = useSelector((state) => state.movies);
+
+  // Виправлення: user тепер без .user
+  const user = useSelector((state) => state.user);
+  const uid = user?.uid;
+
+  // Стан для активної вкладки
   const [activeTab, setActiveTab] = useState("favorites");
 
-  const handleBack = () => {
+  const moviesToShow = activeTab === "favorites" ? favorites : watched;
+
+  const handleAddToFavorites = (movie) => {
+    if (!uid || !movie?.id) return;
+    dispatch(toggleFavorite({ movie, uid }));
+  };
+
+  const handleToggleWatched = (movie) => {
+    if (!uid || !movie?.id) return;
+    dispatch(toggleWatched({ movie, uid }));
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
     navigate("/");
   };
 
+  // Перевірка на наявність користувача
+  if (!user) {
+    return <p className="text-center mt-10">Завантаження профілю...</p>;
+  }
+
   return (
-    <div className="max-w-[1200px] mx-auto p-6">
-      <button onClick={handleBack} className="text-[#51cda6] text-xl mb-4">
-        ← На головну
-      </button>
+    <div className="p-6">
+      {/* Блок профілю */}
+      <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-white p-6 rounded-2xl shadow-md max-w-4xl mx-auto">
+        {/* Кнопка вийти */}
+        <button
+          onClick={handleLogout}
+          className="absolute top-4 right-4 text-sm text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition">
+          Вийти
+        </button>
 
-      <div className="flex flex-col items-center">
-        {photoURL && (
-          <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
-            <img
-              src={photoURL}
-              alt="User Avatar"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )}
-        <h1 className="text-3xl text-[#153d31]">{displayName}</h1>
-        <p className="text-lg text-[#153d31] mb-4">{email}</p>
-
-        <div className="flex gap-8 mb-6">
-          <button
-            onClick={() => setActiveTab("favorites")}
-            className={`text-xl ${
-              activeTab === "favorites"
-                ? "text-[#51cda6] font-semibold"
-                : "text-[#dde7cc]"
-            }`}>
-            Улюблені
-          </button>
-          <button
-            onClick={() => setActiveTab("watched")}
-            className={`text-xl ${
-              activeTab === "watched"
-                ? "text-[#51cda6] font-semibold"
-                : "text-[#dde7cc]"
-            }`}>
-            Переглянуті
-          </button>
+        {/* Аватар */}
+        <div className="w-28 h-28 rounded-full overflow-hidden border shadow-md">
+          <img
+            src={user.photoURL}
+            alt="Avatar"
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        {activeTab === "favorites" && (
-          <ProfileMovieList
-            movies={favorites}
-            noMoviesMessage="У вас немає улюблених фільмів."
-          />
-        )}
-        {activeTab === "watched" && (
-          <ProfileMovieList
-            movies={watched}
-            noMoviesMessage="Ви ще не переглядали фільмів."
-          />
-        )}
-
-        <LogoutButton />
+        {/* Інформація */}
+        <div className="text-center sm:text-left">
+          <h2 className="text-2xl font-semibold text-[#153d31]">
+            {user.displayName}
+          </h2>
+          <p className="text-gray-600 mt-1">{user.email}</p>
+          {/* Кількість фільмів - виведення один під одним */}
+          <div className="mt-6 mb-6">
+            <MovieCount count={favorites.length} label={"Улюблені"} />
+            <MovieCount count={watched.length} label={"Переглянуті"} />
+          </div>
+        </div>
       </div>
+
+      {/* Вкладки для вибору */}
+      <div className="flex justify-center gap-2 mt-10 mb-6 border-b border-[#153d31]">
+        <Button
+          title="Улюблені"
+          active={activeTab === "favorites"}
+          onClick={() => setActiveTab("favorites")}
+        />
+        <Button
+          title="Переглянуті"
+          active={activeTab === "watched"}
+          onClick={() => setActiveTab("watched")}
+        />
+      </div>
+
+      {/* Список фільмів */}
+      {moviesToShow.length > 0 ? (
+        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {moviesToShow.map((movie) => {
+            const isFavorite = favorites.some((m) => m?.id === movie.id);
+            const isWatched = watched.some((m) => m?.id === movie.id);
+            if (!movie?.title || !movie?.poster_path) return null;
+
+            return (
+              <li key={movie.id}>
+                <MovieCard
+                  movie={movie}
+                  onAddToFavorites={handleAddToFavorites}
+                  onToggleWatched={handleToggleWatched}
+                  isFavorite={isFavorite}
+                  isWatched={isWatched}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p className="text-center text-gray-500 mt-4">
+          {activeTab === "favorites"
+            ? "Немає улюблених фільмів"
+            : "Немає переглянутих фільмів"}
+        </p>
+      )}
     </div>
   );
 };
