@@ -2,16 +2,16 @@ import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { logoutUser } from "../../store/userSlice";
-import { useNavigate } from "react-router-dom"; // Імпортуємо useNavigate
+import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Ініціалізуємо navigate
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // вихід з Firebase
-      dispatch(logoutUser()); // очищення Redux
+      await signOut(auth);
+      dispatch(logoutUser());
       console.log("Користувач вийшов");
       navigate("/");
     } catch (error) {
@@ -19,7 +19,13 @@ const LogoutButton = () => {
     }
   };
 
-  return <button onClick={handleLogout}>Вийти</button>;
+  return (
+    <button
+      onClick={handleLogout}
+      className="bg-red-500 text-white text-sm px-4 py-2 rounded-full hover:bg-red-600 transition-all">
+      Вийти
+    </button>
+  );
 };
 
 export default LogoutButton;

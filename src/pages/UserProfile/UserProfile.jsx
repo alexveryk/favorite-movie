@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { logoutUser } from "../../store/userSlice";
 import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { Button } from "../../components/Button/Button";
 import { MovieCount } from "../../components/MovieCount/MovieCount";
-import { useNavigate } from "react-router-dom"; // Імпортуємо useNavigate
+import { useNavigate } from "react-router-dom";
 import style from "./UserProfile.module.css";
 
 export const UserProfile = () => {
@@ -13,14 +13,10 @@ export const UserProfile = () => {
   const navigate = useNavigate();
 
   const { favorites = [], watched = [] } = useSelector((state) => state.movies);
-
-  // Виправлення: user тепер без .user
   const user = useSelector((state) => state.user);
   const uid = user?.uid;
 
-  // Стан для активної вкладки
   const [activeTab, setActiveTab] = useState("favorites");
-
   const moviesToShow = activeTab === "favorites" ? favorites : watched;
 
   const handleAddToFavorites = (movie) => {
@@ -38,23 +34,38 @@ export const UserProfile = () => {
     navigate("/");
   };
 
-  // Перевірка на наявність користувача
+  // Збереження позиції прокрутки та активної вкладки перед зміною вкладки
+  const handleTabChange = (tab) => {
+    localStorage.setItem("scrollPosition", window.scrollY); // Зберігаємо поточну позицію прокрутки
+    localStorage.setItem("activeTab", tab); // Зберігаємо активну вкладку
+    setActiveTab(tab);
+  };
+
+  // Відновлення позиції прокрутки та активної вкладки після завантаження профілю
+  useEffect(() => {
+    const savedPosition = localStorage.getItem("scrollPosition");
+    const savedTab = localStorage.getItem("activeTab");
+    if (savedPosition) {
+      window.scrollTo({ top: parseInt(savedPosition), behavior: "smooth" });
+      localStorage.removeItem("scrollPosition");
+    }
+    if (savedTab) {
+      setActiveTab(savedTab); // Встановлюємо збережену вкладку
+    }
+  }, []);
+
   if (!user) {
     return <p className="text-center mt-10">Завантаження профілю...</p>;
   }
 
   return (
     <div className="p-6">
-      {/* Блок профілю */}
       <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-6 bg-white p-6 rounded-2xl shadow-md max-w-4xl mx-auto">
-        {/* Кнопка вийти */}
         <button
           onClick={handleLogout}
           className="absolute top-4 right-4 text-sm text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md transition">
           Вийти
         </button>
-
-        {/* Аватар */}
         <div className="w-28 h-28 rounded-full overflow-hidden border shadow-md">
           <img
             src={user.photoURL}
@@ -62,14 +73,11 @@ export const UserProfile = () => {
             className="w-full h-full object-cover"
           />
         </div>
-
-        {/* Інформація */}
         <div className="text-center sm:text-left">
           <h2 className="text-2xl font-semibold text-[#153d31]">
             {user.displayName}
           </h2>
           <p className="text-gray-600 mt-1">{user.email}</p>
-          {/* Кількість фільмів - виведення один під одним */}
           <div className="mt-6 mb-6">
             <MovieCount count={favorites.length} label={"Улюблені"} />
             <MovieCount count={watched.length} label={"Переглянуті"} />
@@ -77,21 +85,19 @@ export const UserProfile = () => {
         </div>
       </div>
 
-      {/* Вкладки для вибору */}
       <div className="flex justify-center gap-2 mt-10 mb-6 border-b border-[#153d31]">
         <Button
           title="Улюблені"
           active={activeTab === "favorites"}
-          onClick={() => setActiveTab("favorites")}
+          onClick={() => handleTabChange("favorites")}
         />
         <Button
           title="Переглянуті"
           active={activeTab === "watched"}
-          onClick={() => setActiveTab("watched")}
+          onClick={() => handleTabChange("watched")}
         />
       </div>
 
-      {/* Список фільмів */}
       {moviesToShow.length > 0 ? (
         <ul className={`grid gap-6 ${style.responsiveGrid}`}>
           {moviesToShow.map((movie) => {

@@ -7,24 +7,35 @@
 
 .layoutHeader,
 .layoutFooter {
-  background-color: #333;
-  text-align: center;
-  width: 100%;
   color: white;
+  width: 100%;
+}
+
+.layoutFooter {
+  background-color: #333;
+}
+
+.layoutHeader {
+  background-color: #153d31;
+}
+
+/* Центруючий контейнер з max-width */
+.layoutContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
 }
 
 .layoutContent {
   display: flex;
   flex: 1;
   flex-direction: row;
-  justify-content: center;
+  width: 100%;
 }
 
 .layoutMain {
   flex: 1;
-  max-width: 1400px;
-  width: 100%;
-
   order: 1;
 }
 
@@ -33,19 +44,12 @@
   padding: 16px;
   transition: all 0.3s ease;
   width: 250px;
-
   order: 0;
 }
 
-/* Для екранів менше 1200px — сайдбар під основним контентом */
 @media (max-width: 1199.98px) {
   .layoutContent {
     flex-direction: column;
-  }
-
-  .layoutMain {
-    width: 100%;
-    order: 1;
   }
 
   .layoutSidebar {

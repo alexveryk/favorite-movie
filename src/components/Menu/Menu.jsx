@@ -13,6 +13,26 @@ export const Menu = () => {
       ? "text-[#51cda6] font-semibold border-b-2 border-[#51cda6] text-2xl p-4 transition-all"
       : "text-[#dde7cc] text-2xl p-4 hover:text-[#153d31] hover:bg-[#dde7cc] transition-all";
 
+  const ProfileBlock = () => (
+    <div
+      className="flex items-center gap-2 bg-blue-600 rounded-full px-3 py-1 cursor-pointer"
+      onClick={() => {
+        window.location.href = "/profile";
+        setIsMenuOpen(false);
+      }}>
+      {photoURL && (
+        <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white">
+          <img
+            src={photoURL}
+            alt="User Avatar"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      <span className="text-white text-sm font-medium">{displayName}</span>
+    </div>
+  );
+
   return (
     <nav className="bg-[#153d31] rounded-lg">
       <div className="max-w-[1400px] w-full px-4">
@@ -41,21 +61,7 @@ export const Menu = () => {
           <div className="flex items-center gap-4 pr-2">
             {uid ? (
               <>
-                {photoURL && (
-                  <div className="w-8 h-8 rounded-full overflow-hidden">
-                    <img
-                      src={photoURL}
-                      alt="User Avatar"
-                      className="w-full h-full object-cover cursor-pointer"
-                      onClick={() => (window.location.href = "/profile")}
-                    />
-                  </div>
-                )}
-                <span
-                  className="text-[#dde7cc] text-xs cursor-pointer"
-                  onClick={() => (window.location.href = "/profile")}>
-                  {displayName}
-                </span>
+                <ProfileBlock />
                 <LogoutButton />
               </>
             ) : (
@@ -67,35 +73,30 @@ export const Menu = () => {
         {/* Меню (мобільна версія) */}
         {isMenuOpen && (
           <div className="md:hidden flex flex-col gap-4 mt-4">
-            <NavLink to="/" className={styleNavLink}>
+            <NavLink
+              to="/"
+              className={styleNavLink}
+              onClick={() => setIsMenuOpen(false)}>
               Home
             </NavLink>
-            <NavLink to="/movies" className={styleNavLink}>
+            <NavLink
+              to="/movies"
+              className={styleNavLink}
+              onClick={() => setIsMenuOpen(false)}>
               Movies
             </NavLink>
-            <NavLink to="/serials" className={styleNavLink}>
+            <NavLink
+              to="/serials"
+              className={styleNavLink}
+              onClick={() => setIsMenuOpen(false)}>
               Serials
             </NavLink>
 
             {/* Авторизація (мобільно) */}
-            <div className="flex flex-col items-start gap-2 mt-2 px-2">
+            <div className="flex flex-col items-center gap-3 mt-4 mb-4">
               {uid ? (
                 <>
-                  {photoURL && (
-                    <div className="w-8 h-8 rounded-full overflow-hidden">
-                      <img
-                        src={photoURL}
-                        alt="User Avatar"
-                        className="w-full h-full object-cover"
-                        onClick={() => (window.location.href = "/profile")}
-                      />
-                    </div>
-                  )}
-                  <span
-                    className="text-[#dde7cc] text-lg cursor-pointer"
-                    onClick={() => (window.location.href = "/profile")}>
-                    {displayName}
-                  </span>
+                  <ProfileBlock />
                   <LogoutButton />
                 </>
               ) : (

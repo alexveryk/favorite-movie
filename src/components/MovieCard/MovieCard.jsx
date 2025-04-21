@@ -21,6 +21,7 @@ export const MovieCard = ({ movie }) => {
 
   // Обробники для кліків
   const handleCardClick = () => {
+    localStorage.setItem("scrollPosition", window.scrollY);
     navigate(`/movies/${movie.id}`);
   };
 
