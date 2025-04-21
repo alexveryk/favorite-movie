@@ -6,6 +6,7 @@ import { MovieCard } from "../../components/MovieCard/MovieCard";
 import { Button } from "../../components/Button/Button";
 import { MovieCount } from "../../components/MovieCount/MovieCount";
 import { useNavigate } from "react-router-dom"; // Імпортуємо useNavigate
+import style from "./UserProfile.module.css";
 
 export const UserProfile = () => {
   const dispatch = useDispatch();
@@ -92,7 +93,7 @@ export const UserProfile = () => {
 
       {/* Список фільмів */}
       {moviesToShow.length > 0 ? (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <ul className={`grid gap-6 ${style.responsiveGrid}`}>
           {moviesToShow.map((movie) => {
             const isFavorite = favorites.some((m) => m?.id === movie.id);
             const isWatched = watched.some((m) => m?.id === movie.id);
