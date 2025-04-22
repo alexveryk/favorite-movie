@@ -10,8 +10,8 @@ export const Menu = () => {
 
   const styleNavLink = ({ isActive }) =>
     isActive
-      ? "text-[#51cda6] font-semibold border-b-2 border-[#51cda6] text-2xl p-4 transition-all"
-      : "text-[#dde7cc] text-2xl p-4 hover:text-[#153d31] hover:bg-[#dde7cc] transition-all";
+      ? "text-[#51cda6] font-semibold border-b-2 border-[#51cda6] text-xl p-4 transition-all"
+      : "text-[#dde7cc] text-xl p-4 hover:text-[#153d31] hover:bg-[#dde7cc] transition-all";
 
   const ProfileBlock = () => (
     <div
@@ -36,28 +36,28 @@ export const Menu = () => {
   return (
     <nav className="bg-[#153d31] rounded-lg">
       <div className="max-w-[1400px] w-full px-4">
-        {/* Бургер */}
+        {/* Burger */}
         <div
           className="md:hidden text-white text-3xl cursor-pointer py-4"
           onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? "✖" : "☰"}
         </div>
 
-        {/* Меню (десктоп) */}
+        {/* Menu (desktop) */}
         <div className="hidden md:flex justify-between items-center flex-wrap">
           <div className="flex gap-4">
             <NavLink to="/" className={styleNavLink}>
-              Home
+              Головна
             </NavLink>
             <NavLink to="/movies" className={styleNavLink}>
-              Movies
+              Фільми
             </NavLink>
             <NavLink to="/serials" className={styleNavLink}>
-              Serials
+              Серіали
             </NavLink>
           </div>
 
-          {/* Авторизація */}
+          {/* Authorization */}
           <div className="flex items-center gap-4 pr-2">
             {uid ? (
               <>
@@ -70,29 +70,29 @@ export const Menu = () => {
           </div>
         </div>
 
-        {/* Меню (мобільна версія) */}
+        {/* Menu (mobile version */}
         {isMenuOpen && (
           <div className="md:hidden flex flex-col gap-4 mt-4">
             <NavLink
               to="/"
               className={styleNavLink}
               onClick={() => setIsMenuOpen(false)}>
-              Home
+              Головна
             </NavLink>
             <NavLink
               to="/movies"
               className={styleNavLink}
               onClick={() => setIsMenuOpen(false)}>
-              Movies
+              Фільми
             </NavLink>
             <NavLink
               to="/serials"
               className={styleNavLink}
               onClick={() => setIsMenuOpen(false)}>
-              Serials
+              Серіали
             </NavLink>
 
-            {/* Авторизація (мобільно) */}
+            {/* Authorization (mobile) */}
             <div className="flex flex-col items-center gap-3 mt-4 mb-4">
               {uid ? (
                 <>

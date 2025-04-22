@@ -5,7 +5,7 @@ const initialState = {
   displayName: null,
   email: null,
   photoURL: null,
-  isAuthChecked: false, // нове поле
+  isAuthChecked: false,
 };
 
 const userSlice = createSlice({

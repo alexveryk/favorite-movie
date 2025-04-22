@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { MovieCard } from "../MovieCard/MovieCard";
 import { Button } from "../Button/Button";
-import { logout } from "../../store/userSlice"; // або інший шлях до logout
+import { logout } from "../../store/userSlice";
 
 export const ProfileMovieList = () => {
   const dispatch = useDispatch();

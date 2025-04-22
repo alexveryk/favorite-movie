@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -8,4 +9,8 @@ export const PrivateRoute = ({ element }) => {
     return <Navigate to="/" replace />;
   }
   return element;
+};
+
+PrivateRoute.propTypes = {
+  element: PropTypes.element.isRequired,
 };

@@ -15,7 +15,6 @@ const moviesSlice = createSlice({
 
       if (!movie || typeof movie.id === "undefined") return;
 
-      // Створюємо нову копію масиву, щоб уникнути Proxy
       state.favorites = [...state.favorites];
 
       const index = state.favorites.findIndex((m) => m?.id === movie.id);
@@ -26,7 +25,6 @@ const moviesSlice = createSlice({
       }
 
       if (uid) {
-        // Передаємо в Firebase вже оновлений масив
         updateUserFavorites(uid, state.favorites);
       }
     },
@@ -36,7 +34,6 @@ const moviesSlice = createSlice({
 
       if (!movie || typeof movie.id === "undefined") return;
 
-      // Створюємо нову копію масиву, щоб уникнути Proxy
       state.watched = [...state.watched];
 
       const index = state.watched.findIndex((m) => m?.id === movie.id);
@@ -47,20 +44,17 @@ const moviesSlice = createSlice({
       }
 
       if (uid) {
-        // Передаємо в Firebase вже оновлений масив
         updateUserWatched(uid, state.watched);
       }
     },
 
     setFavorites: (state, action) => {
-      // Переконатися, що це масив і створюємо нову копію
       state.favorites = Array.isArray(action.payload)
         ? [...action.payload]
         : [];
     },
 
     setWatched: (state, action) => {
-      // Переконатися, що це масив і створюємо нову копію
       state.watched = Array.isArray(action.payload) ? [...action.payload] : [];
     },
 

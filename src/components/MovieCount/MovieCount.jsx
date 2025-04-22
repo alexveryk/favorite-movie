@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const MovieCount = ({ count, label, isFavorites }) => {
   return (
     <div
@@ -8,4 +10,10 @@ export const MovieCount = ({ count, label, isFavorites }) => {
       <p className="text-lg text-gray-600">{count} шт.</p>
     </div>
   );
+};
+
+MovieCount.propTypes = {
+  count: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired,
+  isFavorites: PropTypes.bool,
 };

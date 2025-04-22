@@ -14,17 +14,15 @@ const firebaseConfig = {
   databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
-// Ініціалізація
+// Initialization
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const database = getDatabase(app);
 
-// Функції для оновлення у Firebase
 const updateUserFavorites = (uid, favorites) => {
   if (!uid) return;
   const userFavoritesRef = ref(database, `users/${uid}/favorites`);
-  // Передаємо вже новий масив
   set(userFavoritesRef, [...favorites]);
 };
 

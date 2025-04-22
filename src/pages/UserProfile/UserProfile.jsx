@@ -34,14 +34,12 @@ export const UserProfile = () => {
     navigate("/");
   };
 
-  // Збереження позиції прокрутки та активної вкладки перед зміною вкладки
   const handleTabChange = (tab) => {
-    localStorage.setItem("scrollPosition", window.scrollY); // Зберігаємо поточну позицію прокрутки
-    localStorage.setItem("activeTab", tab); // Зберігаємо активну вкладку
+    localStorage.setItem("scrollPosition", window.scrollY);
+    localStorage.setItem("activeTab", tab);
     setActiveTab(tab);
   };
 
-  // Відновлення позиції прокрутки та активної вкладки після завантаження профілю
   useEffect(() => {
     const savedPosition = localStorage.getItem("scrollPosition");
     const savedTab = localStorage.getItem("activeTab");
@@ -50,7 +48,7 @@ export const UserProfile = () => {
       localStorage.removeItem("scrollPosition");
     }
     if (savedTab) {
-      setActiveTab(savedTab); // Встановлюємо збережену вкладку
+      setActiveTab(savedTab);
     }
   }, []);
 

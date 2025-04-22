@@ -38,7 +38,6 @@ function App() {
           })
         );
 
-        // Завантажуємо дані про улюблені та переглянуті фільми
         const favorites = await fetchFavoritesFromFirebase(user.uid);
         const watched = await fetchWatchedFromFirebase(user.uid);
 
@@ -68,7 +67,6 @@ function App() {
         <Route path="/serials" element={<Serials />} />
         <Route path="/movies/:id" element={<MovieDetails />} />
 
-        {/* Використовуємо PrivateRoute для захисту профілю */}
         <Route
           path="/profile"
           element={<PrivateRoute element={<UserProfile />} />}

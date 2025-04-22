@@ -9,7 +9,6 @@ export const MovieDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  // Отримуємо улюблені та переглянуті фільми з Redux
   const favorites = useSelector((state) => state.movies.favorites);
   const watched = useSelector((state) => state.movies.watched);
   const uid = useSelector((state) => state.user.uid);
@@ -54,7 +53,6 @@ export const MovieDetails = () => {
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
 
-  // Перевірка на масив перед використанням .some()
   const isFavorite =
     Array.isArray(favorites) && favorites.some((m) => m.id === movie.id);
   const isWatched =

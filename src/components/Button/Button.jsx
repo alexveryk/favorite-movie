@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import clsx from "clsx";
 
 export const Button = ({ title, onClick, active = false }) => {
@@ -15,4 +16,10 @@ export const Button = ({ title, onClick, active = false }) => {
       {title}
     </button>
   );
+};
+
+Button.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  active: PropTypes.bool,
 };

@@ -12,7 +12,7 @@ export const MoviesList = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(null);
+  // const [scrollPosition, setScrollPosition] = useState(null);
 
   const dispatch = useDispatch();
   const isFetching = useRef(false);
@@ -27,7 +27,7 @@ export const MoviesList = () => {
       setTimeout(() => {
         window.scrollTo({ top: parseInt(savedPosition), behavior: "smooth" });
         localStorage.removeItem("scrollPosition");
-      }, 100); // Відкладене виконання
+      }, 100);
     }
   }, []);
 
@@ -40,7 +40,6 @@ export const MoviesList = () => {
     }
   }, [movies]);
 
-  // Отримання фільмів
   useEffect(() => {
     const fetchData = async () => {
       if (isFetching.current) return;
@@ -61,7 +60,6 @@ export const MoviesList = () => {
     fetchData();
   }, [page]);
 
-  // Плавна прокрутка до останнього елементу
   useEffect(() => {
     if (lastVisibleRef.current) {
       lastVisibleRef.current.scrollIntoView({
@@ -71,7 +69,6 @@ export const MoviesList = () => {
     }
   }, [movies]);
 
-  // Кнопка "до гори"
   useEffect(() => {
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);

@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import { logoutUser } from "../../store/userSlice";
 import { useNavigate } from "react-router-dom";
+import { clearMovies } from "../../store/moviesSlice";
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const LogoutButton = () => {
     try {
       await signOut(auth);
       dispatch(logoutUser());
-      console.log("Користувач вийшов");
+      dispatch(clearMovies());
       navigate("/");
     } catch (error) {
       console.error("Помилка при виході:", error.message);
