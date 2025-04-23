@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+
+import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import styles from "./MovieCard.module.css";
 import { Rating } from "../Rating/Rating";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
-import { toast } from "react-toastify";
+import { truncatedText } from "../../utils/textUtils";
 
 export const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
@@ -117,11 +119,7 @@ export const MovieCard = ({ movie }) => {
       </div>
 
       <div className={styles.info}>
-        <h2 className={styles.title}>
-          {movie.title.length > 18
-            ? `${movie.title.slice(0, 18)}…`
-            : movie.title}
-        </h2>
+        <h2 className={styles.title}>{truncatedText(movie.title)}</h2>
         <p className={styles.year}>{movie.release_date.slice(0, 4)}</p>
       </div>
     </div>

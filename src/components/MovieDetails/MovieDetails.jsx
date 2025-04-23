@@ -1,11 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { getMovieDetails, getMovieCredits } from "../../services/api";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { motion } from "framer-motion";
+import { truncatedText } from "../../utils/textUtils";
+import img from "../../../public/posterNotAvailable.png";
 
 export const MovieDetails = () => {
   const { id } = useParams();
@@ -23,6 +24,11 @@ export const MovieDetails = () => {
   const [showTrailer, setShowTrailer] = useState(false);
 
   useEffect(() => {
+    setMovie(null);
+    setCredits({ cast: [], crew: [] });
+    setVideos([]);
+    setShowTrailer(false);
+
     const fetchData = async () => {
       try {
         const [movieRes, creditsRes, videoRes] = await Promise.all([
@@ -111,7 +117,12 @@ export const MovieDetails = () => {
         }}>
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
           <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            // src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : "/posterNotAvailable.png"
+            }
             alt={movie.title}
             className="rounded-xl shadow-lg md:w-[320px] w-full max-w-[320px]"
           />
@@ -144,7 +155,6 @@ export const MovieDetails = () => {
               <strong>Режисер:</strong> {director?.name}
             </p>
             <div className="flex flex-col gap-4 mt-4">
-              {/* Блок 1: Улюблене + Переглянуто */}
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={handleFavoriteClick}
@@ -164,7 +174,6 @@ export const MovieDetails = () => {
                 </button>
               </div>
 
-              {/* Блок 2: Трейлер */}
               {trailer && (
                 <div>
                   <button
@@ -175,7 +184,6 @@ export const MovieDetails = () => {
                 </div>
               )}
 
-              {/* Блок 3: Поділитися + Опис */}
               <div>
                 <button
                   onClick={shareMovie}
@@ -235,14 +243,22 @@ export const MovieDetails = () => {
           <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
             {similarMovies.map((movie) => (
               <div key={movie.id} className="w-[150px] flex-shrink-0">
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
-                  className="rounded-lg"
-                />
-                <p className="text-center text-sm text-white mt-1">
-                  {movie.title}
-                </p>
+                <Link to={`/movies/${movie.id}`} className="block">
+                  <img
+                    loading="lazy"
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : "/posterNotAvailable.png"
+                    }
+                    alt={movie.title}
+                    className="rounded-lg min-w-[150px] min-h-[225px] object-cover"
+                  />
+
+                  <p className="text-center text-sm text-white mt-1">
+                    {truncatedText(movie.title, 16)}
+                  </p>
+                </Link>
               </div>
             ))}
           </div>
