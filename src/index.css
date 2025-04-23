@@ -64,3 +64,28 @@ img {
   height: 100vh;
   font-size: 1.5rem;
 }
+
+.clickable-text {
+  cursor: pointer;
+}
+
+.clickable-text:active {
+  cursor: default;
+}
+
+.clickable-text:focus {
+  outline: none;
+  cursor: default;
+}
+
+input,
+textarea {
+  caret-color: blue;
+  animation: none;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}

@@ -18,8 +18,8 @@ export const Layout = ({ children }) => {
         </div>
       </div>
 
-      <footer className={styles.layoutFooter}>
-        <div className={styles.layoutContainer}>Footer</div>
+      <footer className="sticky bottom-0 bg-gray-800 text-white p-4 text-center z-50">
+        &copy; 2025 Filmial. Всі права захищено.
       </footer>
     </div>
   );
