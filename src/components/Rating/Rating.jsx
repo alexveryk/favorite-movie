@@ -9,12 +9,12 @@ export const Rating = ({ rating, title }) => {
 
   return (
     <div className={styles.ratingCard}>
-      <div title={`${title} голосів`}>{rounding(rating)}</div>
+      <div title={`Рейтинг фільму "${title}"`}>{rounding(rating)}</div>
     </div>
   );
 };
 
 Rating.propTypes = {
   rating: PropTypes.number.isRequired,
-  title: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
 };

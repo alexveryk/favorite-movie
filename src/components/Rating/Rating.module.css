@@ -1,7 +1,7 @@
 .ratingCard {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
+  bottom: 4px;
+  right: 4px;
   width: 60px;
   border-radius: 8px;
   padding: 4px;
@@ -9,5 +9,5 @@
   text-align: center;
   background-color: #e3655b;
   color: white;
-  font-size: 22px;
+  font-size: 16px;
 }
