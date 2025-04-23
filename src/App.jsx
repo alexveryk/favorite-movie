@@ -10,6 +10,9 @@ import {
   fetchWatchedFromFirebase,
 } from "./firebase/firebase";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "./components/Layout/Layout";
 import { Home } from "./pages/Home/Home";
@@ -60,21 +63,24 @@ function App() {
   }
 
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/serials" element={<Serials />} />
-        <Route path="/movies/:id" element={<MovieDetails />} />
+    <>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/serials" element={<Serials />} />
+          <Route path="/movies/:id" element={<MovieDetails />} />
 
-        <Route
-          path="/profile"
-          element={<PrivateRoute element={<UserProfile />} />}
-        />
+          <Route
+            path="/profile"
+            element={<PrivateRoute element={<UserProfile />} />}
+          />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Layout>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
+    </>
   );
 }
 

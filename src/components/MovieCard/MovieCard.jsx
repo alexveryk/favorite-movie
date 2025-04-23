@@ -4,6 +4,7 @@ import { Rating } from "../Rating/Rating";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
+import { toast } from "react-toastify";
 
 export const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
@@ -24,11 +25,23 @@ export const MovieCard = ({ movie }) => {
 
   const handleFavoriteClick = (evt) => {
     evt.stopPropagation();
+
+    if (!uid) {
+      toast.info("Увійдіть, щоб додати до улюбленого.");
+      return;
+    }
+
     dispatch(toggleFavorite({ movie, uid }));
   };
 
   const handleWatchedClick = (evt) => {
     evt.stopPropagation();
+
+    if (!uid) {
+      toast.info("Увійдіть, щоб позначити як переглянуте.");
+      return;
+    }
+
     dispatch(toggleWatched({ movie, uid }));
   };
 
@@ -48,7 +61,11 @@ export const MovieCard = ({ movie }) => {
           </div>
         )}
 
-        <Rating className={styles.rating} rating={movie.vote_average} />
+        <Rating
+          className={styles.rating}
+          rating={movie.vote_average}
+          title={movie.title}
+        />
 
         <img
           loading="lazy"

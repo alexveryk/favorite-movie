@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { getMovieDetails, getMovieCredits } from "../../services/api";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const MovieDetails = () => {
   const { id } = useParams();
@@ -59,10 +60,19 @@ export const MovieDetails = () => {
     Array.isArray(watched) && watched.some((m) => m.id === movie.id);
 
   const handleFavoriteClick = () => {
+    if (!uid) {
+      toast.info("Увійдіть, щоб додати до улюбленого.");
+      return;
+    }
     dispatch(toggleFavorite({ movie, uid }));
   };
 
   const handleWatchedClick = () => {
+    if (!uid) {
+      toast.info("Увійдіть, щоб позначити як переглянуте.");
+      return;
+    }
+
     dispatch(toggleWatched({ movie, uid }));
   };
 
