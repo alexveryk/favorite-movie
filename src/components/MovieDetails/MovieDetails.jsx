@@ -143,36 +143,46 @@ export const MovieDetails = () => {
             <p>
               <strong>Режисер:</strong> {director?.name}
             </p>
-            <div className="flex flex-wrap gap-4 mt-4">
-              <button
-                onClick={handleFavoriteClick}
-                className={`px-4 py-2 rounded-lg font-semibold ${
-                  isFavorite ? "bg-red-600" : "bg-white text-black"
-                }`}>
-                {isFavorite ? "Видалити з улюбленого" : "Додати в улюблене"}
-              </button>
-              <button
-                onClick={handleWatchedClick}
-                className={`px-4 py-2 rounded-lg font-semibold ${
-                  isWatched ? "bg-blue-600" : "bg-white text-black"
-                }`}>
-                {isWatched
-                  ? "Позначити як не переглянутий"
-                  : "Позначити як переглянутий"}
-              </button>
-              {trailer && (
+            <div className="flex flex-col gap-4 mt-4">
+              {/* Блок 1: Улюблене + Переглянуто */}
+              <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => setShowTrailer(true)}
-                  className="px-4 py-2 rounded-lg bg-yellow-500 text-black font-semibold">
-                  Подивитися трейлер
+                  onClick={handleFavoriteClick}
+                  className={`px-4 py-2 rounded-lg font-semibold ${
+                    isFavorite ? "bg-red-600 text-white" : "bg-white text-black"
+                  }`}>
+                  {isFavorite ? "Видалити з улюбленого" : "Додати в улюблене"}
                 </button>
+                <button
+                  onClick={handleWatchedClick}
+                  className={`px-4 py-2 rounded-lg font-semibold ${
+                    isWatched ? "bg-blue-600 text-white" : "bg-white text-black"
+                  }`}>
+                  {isWatched
+                    ? "Позначити як не переглянутий"
+                    : "Позначити як переглянутий"}
+                </button>
+              </div>
+
+              {/* Блок 2: Трейлер */}
+              {trailer && (
+                <div>
+                  <button
+                    onClick={() => setShowTrailer(true)}
+                    className="px-4 py-2 rounded-lg bg-yellow-500 text-black font-semibold">
+                    Подивитися трейлер
+                  </button>
+                </div>
               )}
+
+              {/* Блок 3: Поділитися + Опис */}
               <div>
                 <button
                   onClick={shareMovie}
-                  className="px-4 py-2 rounded-lg bg-green-500 text-black font-semibold">
+                  className="px-4 py-2 rounded-lg bg-green-500 text-black font-semibold mb-2">
                   Поділитися
                 </button>
+
                 <p className="text-white font-semibold mb-1">Опис:</p>
                 <p className="text-gray-200 leading-relaxed">
                   {isOverviewExpanded
