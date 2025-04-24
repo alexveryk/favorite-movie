@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import GoogleLoginButton from "../GoogleLoginButton/GoogleLoginButton";
 import LogoutButton from "../LogoutButton/LogoutButton";
+import { SearchBar } from "../SearchBar/SearchBar";
 
 export const Menu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,6 +60,7 @@ export const Menu = () => {
 
           {/* Authorization */}
           <div className="flex items-center gap-4 pr-2">
+            <SearchBar />
             {uid ? (
               <>
                 <ProfileBlock />
@@ -91,7 +93,10 @@ export const Menu = () => {
               onClick={() => setIsMenuOpen(false)}>
               Серіали
             </NavLink>
-
+            <div className="px-4">
+              {/* <SearchBar onSearchDone={() => setIsMenuOpen(false)} /> */}
+              <SearchBar />
+            </div>
             {/* Authorization (mobile) */}
             <div className="flex flex-col items-center gap-3 mt-4 mb-4">
               {uid ? (

@@ -29,3 +29,12 @@ export const getMovieCredits = async (movie_id) => {
   );
   return response;
 };
+
+export const searchMovies = async (query, page = 1) => {
+  const response = await axios.get(
+    `${BASE_URL}search/movie?api_key=${API_KEY}&language=${
+      options.iso_639_1
+    }&query=${encodeURIComponent(query)}&page=${page}`
+  );
+  return response;
+};
