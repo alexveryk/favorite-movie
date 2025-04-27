@@ -4,10 +4,12 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
-import styles from "./MovieCard.module.css";
-import { Rating } from "../Rating/Rating";
 import { truncatedText } from "../../utils/textUtils";
+
+import { Rating } from "../Rating/Rating";
 import { WatchedLabel } from "../WatchedLabel/WatchedLabel";
+
+import styles from "./MovieCard.module.css";
 
 export const MovieCard = ({ movie }) => {
   const navigate = useNavigate();

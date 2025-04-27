@@ -2,7 +2,12 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
-import { getMovieDetails, getMovieCredits } from "../../services/api";
+import {
+  getMovieDetails,
+  getMovieCredits,
+  getMovieVideos,
+  getSimilarMovies,
+} from "../../services/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { truncatedText } from "../../utils/textUtils";
@@ -34,9 +39,7 @@ export const MovieDetails = () => {
         const [movieRes, creditsRes, videoRes] = await Promise.all([
           getMovieDetails(id),
           getMovieCredits(id),
-          axios.get(
-            `https://api.themoviedb.org/3/movie/${id}/videos?api_key=cc9b731996eb433c4f02d82e82c7e11c&language=uk`
-          ),
+          getMovieVideos(id),
         ]);
 
         setMovie(movieRes.data);
@@ -53,9 +56,7 @@ export const MovieDetails = () => {
   useEffect(() => {
     const fetchSimilarMovies = async () => {
       try {
-        const similarRes = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}/similar?api_key=cc9b731996eb433c4f02d82e82c7e11c&language=uk`
-        );
+        const similarRes = await getSimilarMovies(id);
         setSimilarMovies(similarRes.data.results);
       } catch (error) {
         console.error("Помилка завантаження подібних фільмів:", error);
@@ -117,7 +118,6 @@ export const MovieDetails = () => {
         }}>
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
           <img
-            // src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             src={
               movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -228,9 +228,6 @@ export const MovieDetails = () => {
         </div>
       </div>
 
-      {/* <div className="h-8 bg-gradient-to-b from-[#000000] via-[#1a1a1a] to-gray-900" /> */}
-
-      {/*  */}
       <div
         className="py-10 px-6"
         style={{

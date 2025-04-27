@@ -12,7 +12,6 @@ export const MoviesList = () => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  // const [scrollPosition, setScrollPosition] = useState(null);
 
   const dispatch = useDispatch();
   const isFetching = useRef(false);

@@ -38,3 +38,17 @@ export const searchMovies = async (query, page = 1) => {
   );
   return response;
 };
+
+export const getMovieVideos = async (movie_id) => {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movie_id}/videos?api_key=${API_KEY}&language=${options.iso_639_1}`
+  );
+  return response;
+};
+
+export const getSimilarMovies = async (movie_id) => {
+  const response = await axios.get(
+    `${BASE_URL}movie/${movie_id}/similar?api_key=${API_KEY}&language=${options.iso_639_1}`
+  );
+  return response;
+};
