@@ -1,7 +1,6 @@
 import axios from "axios";
 const BASE_URL = "https://api.themoviedb.org/3/";
-const API_KEY = "cc9b731996eb433c4f02d82e82c7e11c";
-// const page = 3;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 const options = {
   iso_639_1: "uk",

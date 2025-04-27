@@ -8,10 +8,10 @@ import {
   getMovieVideos,
   getSimilarMovies,
 } from "../../services/api";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { truncatedText } from "../../utils/textUtils";
-import img from "../../../public/posterNotAvailable.png";
+
+// import img from "../../../public/posterNotAvailable";
 
 export const MovieDetails = () => {
   const { id } = useParams();
@@ -27,6 +27,8 @@ export const MovieDetails = () => {
   const [credits, setCredits] = useState({ cast: [], crew: [] });
   const [videos, setVideos] = useState([]);
   const [showTrailer, setShowTrailer] = useState(false);
+
+  const imgUrl = "/posterNotAvailable.png";
 
   useEffect(() => {
     setMovie(null);
@@ -121,7 +123,7 @@ export const MovieDetails = () => {
             src={
               movie.poster_path
                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                : "/posterNotAvailable.png"
+                : "imgUrl"
             }
             alt={movie.title}
             className="rounded-xl shadow-lg md:w-[320px] w-full max-w-[320px]"
@@ -246,7 +248,7 @@ export const MovieDetails = () => {
                     src={
                       movie.poster_path
                         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "/posterNotAvailable.png"
+                        : "imgUrl"
                     }
                     alt={movie.title}
                     className="rounded-lg min-w-[150px] min-h-[225px] object-cover"
