@@ -7,6 +7,7 @@ import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import styles from "./MovieCard.module.css";
 import { Rating } from "../Rating/Rating";
 import { truncatedText } from "../../utils/textUtils";
+import { WatchedLabel } from "../WatchedLabel/WatchedLabel";
 
 export const MovieCard = ({ movie }) => {
   const navigate = useNavigate();
@@ -50,18 +51,7 @@ export const MovieCard = ({ movie }) => {
   return (
     <div className={styles.movieContainer}>
       <div className={styles.thumb} onClick={handleCardClick}>
-        {isWatched && (
-          <div className={styles.watchedBadge}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={styles.checkIcon}
-              viewBox="0 0 24 24"
-              fill="currentColor">
-              <path d="M9 16.2l-3.5-3.6L4 14l5 5 12-12-1.4-1.4z" />
-            </svg>
-            Переглянуто
-          </div>
-        )}
+        {isWatched && <WatchedLabel />}
 
         <Rating
           className={styles.rating}
