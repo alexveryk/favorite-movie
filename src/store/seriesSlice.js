@@ -6,10 +6,11 @@ const seriesSlice = createSlice({
   initialState: {
     favorites: [],
     watched: [],
+    watchedEpisodes: {}, // ✅ Додано watchedEpisodes
   },
   reducers: {
     toggleFavorite: (state, action) => {
-      const { series, uid } = action.payload;
+      const { series } = action.payload;
       const isFavorite = state.favorites.some((s) => s.id === series.id);
 
       if (isFavorite) {
@@ -19,7 +20,7 @@ const seriesSlice = createSlice({
       }
     },
     toggleWatched: (state, action) => {
-      const { series, uid } = action.payload;
+      const { series } = action.payload;
       const isWatched = state.watched.some((s) => s.id === series.id);
 
       if (isWatched) {
@@ -28,9 +29,15 @@ const seriesSlice = createSlice({
         state.watched.push(series);
       }
     },
+    setWatched: (state, action) => {
+      // ✅ Додано логіку для watchedEpisodes (перемикач)
+      const { episodeId } = action.payload;
+      state.watchedEpisodes[episodeId] = !state.watchedEpisodes[episodeId];
+    },
   },
 });
 
-export const { toggleFavorite, toggleWatched } = seriesSlice.actions;
+export const { toggleFavorite, toggleWatched, setWatched } =
+  seriesSlice.actions;
 
 export default seriesSlice.reducer;

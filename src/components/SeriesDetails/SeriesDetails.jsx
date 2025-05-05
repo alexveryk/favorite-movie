@@ -36,13 +36,48 @@ export const SeriesDetails = () => {
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
   const [episodes, setEpisodes] = useState([]);
   const [season, setSeason] = useState(null);
-  //   const [watched, setWatched] = useState({});
-
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(1);
 
+  // useEffect(() => {
+  //   const fetchSeasonsAndEpisodes = async () => {
+  //     try {
+  //       const seriesData = await getSeriesDetails(id);
+  //       setSeries(seriesData);
+  //       const seasonsData = seriesData.seasons || [];
+  //       setSeasons(seasonsData);
+
+  //       const episodesData = {};
+  //       for (const season of seasonsData) {
+  //         const seasonEpisodes = await getSeasonEpisodes(
+  //           id,
+  //           season.season_number
+  //         );
+  //         episodesData[season.season_number] = seasonEpisodes.episodes || [];
+  //       }
+  //       setEpisodes(episodesData);
+  //     } catch (err) {
+  //       console.error("Помилка завантаження даних сезонів та серій:", err);
+  //     }
+  //   };
+  //   fetchSeasonsAndEpisodes();
+  // }, [id]);
+
+  // useEffect(() => {
+  //   const fetchSeasons = async () => {
+  //     try {
+  //       const seriesData = await getSeriesDetails(id);
+  //       setSeasons(seriesData.seasons || []); // отримуємо сезони
+  //       fetchEpisodes(seriesData.seasons[0].id); // за замовчуванням завантажуємо перший сезон
+  //     } catch (err) {
+  //       console.error("Помилка завантаження даних сезону:", err);
+  //     }
+  //   };
+  //   fetchSeasons();
+  // }, [id]);
+
   useEffect(() => {
-    const fetchSeasonsAndEpisodes = async () => {
+    const fetchSeriesData = async () => {
       try {
         const seriesData = await getSeriesDetails(id);
         setSeries(seriesData);
@@ -59,23 +94,10 @@ export const SeriesDetails = () => {
         }
         setEpisodes(episodesData);
       } catch (err) {
-        console.error("Помилка завантаження даних сезонів та серій:", err);
+        console.error("Помилка завантаження даних серіалу:", err);
       }
     };
-    fetchSeasonsAndEpisodes();
-  }, [id]);
-
-  useEffect(() => {
-    const fetchSeasons = async () => {
-      try {
-        const seriesData = await getSeriesDetails(id);
-        setSeasons(seriesData.seasons || []); // отримуємо сезони
-        fetchEpisodes(seriesData.seasons[0].id); // за замовчуванням завантажуємо перший сезон
-      } catch (err) {
-        console.error("Помилка завантаження даних сезону:", err);
-      }
-    };
-    fetchSeasons();
+    fetchSeriesData();
   }, [id]);
 
   const fetchEpisodes = async (seasonId) => {
@@ -127,22 +149,19 @@ export const SeriesDetails = () => {
     dispatch(toggleFavorite({ series, uid }));
   };
 
-  const handleWatchedClick = () => {
-    if (!uid) return toast.info("Увійдіть, щоб позначити як переглянуте.");
-    dispatch(toggleWatched({ series, uid }));
-  };
-
   const shareSeries = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success("Посилання скопійовано!");
   };
 
-  const director = credits.crew.find((p) => p.job === "Director");
-  const topCast = credits.cast
-    .slice(0, 5)
-    .map((a) => a.name)
-    .join(", ");
-  const genreList = series?.genres?.map((g) => g.name).join(", ");
+  const topCast =
+    credits.cast
+      .slice(0, 5)
+      .map((a) => a.name)
+      .join(", ") || "Невідомо";
+  const genreList = series?.genres?.map((g) => g.name).join(", ") || "Невідомо";
+  const director =
+    credits.crew.find((p) => p.job === "Director")?.name || "Невідомо";
   const trailer = videos.find(
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
@@ -205,13 +224,6 @@ export const SeriesDetails = () => {
                 }`}>
                 {isFavorite ? "У видаленому" : "У улюблене"}
               </button>
-              <button
-                onClick={handleWatchedClick}
-                className={`px-4 py-2 rounded-lg font-semibold ${
-                  isWatched ? "bg-blue-600 text-white" : "bg-white text-black"
-                }`}>
-                {isWatched ? "Не переглянутий" : "Переглянутий"}
-              </button>
               {trailer && (
                 <button
                   onClick={() => setShowTrailer(true)}
@@ -251,13 +263,8 @@ export const SeriesDetails = () => {
           onClose={() => setShowTrailer(false)}
         />
       )}
-
+      <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
       <SimilarSeriesList similarSeries={similar} />
-      <SeasonEpisodes
-        seriesId={id}
-        seasonNumber={selectedSeason}
-        // posterPath={selectedSeasonPosterPath}
-      />
     </>
   );
 };

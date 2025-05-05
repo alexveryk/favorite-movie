@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, database } from "./firebase/firebase";
+import { auth } from "./firebase/firebase";
 import { setUser, logoutUser } from "./store/userSlice";
 import { setFavorites, setWatched } from "./store/moviesSlice";
 import {
