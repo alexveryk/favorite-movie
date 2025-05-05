@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTrending } from "../../services/api";
-import { MovieCard } from "../MovieCard/MovieCard";
-import { Button } from "../Button/Button";
+import { MovieCard } from "../MovieCard/MovieCard.jsx";
+// import { Button } from "../Button/Button.jsx";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { ChevronUp } from "lucide-react";
-import style from "./MoviesList.module.css";
 
 export const MoviesList = () => {
   const [loading, setLoading] = useState(false);
@@ -115,7 +114,7 @@ export const MoviesList = () => {
       {loading && <div className="spinner"></div>}
       {movies.length > 0 ? (
         <>
-          <ul className={`${style.responsiveGrid} gap-6`}>
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
             {movies.map((movie) => {
               const isFavorite = favorites?.some((m) => m?.id === movie.id);
               const isWatched = watched?.some((m) => m?.id === movie.id);
@@ -134,7 +133,11 @@ export const MoviesList = () => {
             })}
           </ul>
           <div className="flex justify-center m-6">
-            <Button title="Завантажити ще..." onClick={handleClick} />
+            <button
+              onClick={handleClick}
+              className="bg-blue-400 text-white font-semibold py-2 px-6 rounded-xl shadow-md hover:bg-blue-500 active:scale-95 transition-transform duration-150">
+              Завантажити ще...
+            </button>
           </div>
         </>
       ) : (
@@ -144,7 +147,7 @@ export const MoviesList = () => {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-gray-800 text-white p-3 rounded-full shadow-lg hover:bg-gray-700 transition"
+          className="fixed bottom-6 right-6 bg-gray-800 text-white p-3 rounded-full shadow-lg hover:bg-gray-700 transition z-100 border-amber-50 border-2"
           aria-label="Прокрутити вгору">
           <ChevronUp size={24} />
         </button>

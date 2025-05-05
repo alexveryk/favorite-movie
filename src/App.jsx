@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "./firebase/firebase";
-import { ref, get } from "firebase/database";
 import { setUser, logoutUser } from "./store/userSlice";
 import { setFavorites, setWatched } from "./store/moviesSlice";
 import {
@@ -24,6 +23,8 @@ import { MovieDetails } from "./components/MovieDetails/MovieDetails";
 import "./App.css";
 import { UserProfile } from "./pages/UserProfile/UserProfile";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import { SearchPage } from "./pages/SearchPage/SearchPage";
+import { SeriesDetails } from "./components/SeriesDetails/SeriesDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,8 @@ function App() {
           <Route path="/movies" element={<Movies />} />
           <Route path="/serials" element={<Serials />} />
           <Route path="/movies/:id" element={<MovieDetails />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/serials/:id" element={<SeriesDetails />} />
 
           <Route
             path="/profile"

@@ -3,27 +3,27 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
-import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
+import { toggleFavorite, toggleWatched } from "../../store/seriesSlice";
 import { truncatedText } from "../../utils/textUtils";
 
 import { Rating } from "../Rating/Rating.jsx";
 import { WatchedLabel } from "../WatchedLabel/WatchedLabel.jsx";
 
-export const MovieCard = ({ movie }) => {
+export const SeriesCard = ({ series }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { favorites, watched } = useSelector((state) => state.movies);
+  const { favorites, watched } = useSelector((state) => state.series);
   const uid = useSelector((state) => state.user.uid);
 
   const isFavorite =
-    Array.isArray(favorites) && favorites.some((m) => m.id === movie.id);
+    Array.isArray(favorites) && favorites.some((s) => s.id === series.id);
   const isWatched =
-    Array.isArray(watched) && watched.some((m) => m.id === movie.id);
+    Array.isArray(watched) && watched.some((s) => s.id === series.id);
 
   const handleCardClick = () => {
     localStorage.setItem("scrollPosition", window.scrollY);
-    navigate(`/movies/${movie.id}`);
+    navigate(`/serials/${series.id}`);
   };
 
   const handleFavoriteClick = (evt) => {
@@ -34,7 +34,7 @@ export const MovieCard = ({ movie }) => {
       return;
     }
 
-    dispatch(toggleFavorite({ movie, uid }));
+    dispatch(toggleFavorite({ series, uid }));
   };
 
   const handleWatchedClick = (evt) => {
@@ -45,7 +45,7 @@ export const MovieCard = ({ movie }) => {
       return;
     }
 
-    dispatch(toggleWatched({ movie, uid }));
+    dispatch(toggleWatched({ series, uid }));
   };
 
   return (
@@ -57,14 +57,14 @@ export const MovieCard = ({ movie }) => {
 
         <Rating
           className="absolute top-2 left-2 z-10"
-          rating={movie.vote_average}
-          title={movie.title}
+          rating={series.vote_average}
+          title={series.name}
         />
 
         <img
           loading="lazy"
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={movie.title}
+          src={`https://image.tmdb.org/t/p/w500/${series.poster_path}`}
+          alt={series.name}
           className="w-full h-full object-cover block"
         />
 
@@ -113,23 +113,23 @@ export const MovieCard = ({ movie }) => {
 
       <div className="bg-gray-200 py-3 px-4 text-center">
         <h2 className="text-lg font-semibold text-gray-800 mb-2">
-          {truncatedText(movie.title)}
+          {truncatedText(series.name)}
         </h2>
         <p className="text-gray-600 font-bold">
-          {movie.release_date.slice(0, 4)}
+          {series.first_air_date.slice(0, 4)}{" "}
         </p>
       </div>
     </div>
   );
 };
 
-MovieCard.propTypes = {
-  movie: PropTypes.shape({
+SeriesCard.propTypes = {
+  series: PropTypes.shape({
     poster_path: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     vote_average: PropTypes.number.isRequired,
     vote_count: PropTypes.number.isRequired,
-    release_date: PropTypes.string.isRequired,
+    first_air_date: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
 };

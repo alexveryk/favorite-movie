@@ -1,5 +1,5 @@
 import { MovieNews } from "../../components/MovieNews/MovieNews";
-import SearchResults from "../../components/SearchResults/SearchResults";
+import { SearchResults } from "../../components/SearchResults/SearchResults";
 import { TrendingSlider } from "../../components/TrendingSlider/TrendingSlider";
 
 export const Home = () => {

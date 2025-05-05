@@ -1,8 +1,28 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { searchMovies } from "../../services/api";
+import { setSearchResults } from "../../store/searchSlice";
 import { MovieCard } from "../MovieCard/MovieCard";
 
-const SearchResults = () => {
-  const { results, query } = useSelector((state) => state.search);
+export const SearchResults = ({ query }) => {
+  const dispatch = useDispatch();
+  const results = useSelector((state) => state.search.results);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      if (!query?.trim()) return;
+      try {
+        const res = await searchMovies(query);
+        if (res.data?.results) {
+          dispatch(setSearchResults({ results: res.data.results, query }));
+        }
+      } catch (err) {
+        console.error("Search error:", err);
+      }
+    };
+
+    fetchResults();
+  }, [query, dispatch]);
 
   if (!query) return null;
 
@@ -19,5 +39,3 @@ const SearchResults = () => {
     </div>
   );
 };
-
-export default SearchResults;
