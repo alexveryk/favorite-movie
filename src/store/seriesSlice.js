@@ -1,4 +1,3 @@
-// src/store/seriesSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const seriesSlice = createSlice({
@@ -6,7 +5,7 @@ const seriesSlice = createSlice({
   initialState: {
     favorites: [],
     watched: [],
-    watchedEpisodes: {}, // ✅ Додано watchedEpisodes
+    watchedEpisodes: {},
   },
   reducers: {
     toggleFavorite: (state, action) => {
@@ -19,6 +18,7 @@ const seriesSlice = createSlice({
         state.favorites.push(series);
       }
     },
+
     toggleWatched: (state, action) => {
       const { series } = action.payload;
       const isWatched = state.watched.some((s) => s.id === series.id);
@@ -29,15 +29,23 @@ const seriesSlice = createSlice({
         state.watched.push(series);
       }
     },
+
     setWatched: (state, action) => {
-      // ✅ Додано логіку для watchedEpisodes (перемикач)
       const { episodeId } = action.payload;
       state.watchedEpisodes[episodeId] = !state.watchedEpisodes[episodeId];
+    },
+
+    setAllWatchedEpisodes: (state, action) => {
+      state.watchedEpisodes = action.payload;
     },
   },
 });
 
-export const { toggleFavorite, toggleWatched, setWatched } =
-  seriesSlice.actions;
+export const {
+  toggleFavorite,
+  toggleWatched,
+  setWatched,
+  setAllWatchedEpisodes,
+} = seriesSlice.actions;
 
 export default seriesSlice.reducer;

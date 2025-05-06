@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setWatched } from "../../store/seriesSlice";
 import { getSeriesDetails, getSeasonEpisodes } from "../../services/api";
+import { updateWatchedEpisodes } from "../../utils/firebaseUserData.js";
+import { setAllWatchedEpisodes } from "../../store/seriesSlice";
 
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+import { onValue, ref } from "firebase/database";
+import { database } from "../../firebase/firebase";
 
 export const SeasonEpisodes = ({ seriesId }) => {
   const dispatch = useDispatch();
@@ -17,6 +21,18 @@ export const SeasonEpisodes = ({ seriesId }) => {
   );
   const [seasons, setSeasons] = useState([]);
   const [open, setOpen] = useState(null);
+
+  useEffect(() => {
+    if (!uid) return;
+
+    const watchedRef = ref(database, `users/${uid}/watchedEpisodes`);
+    const unsubscribe = onValue(watchedRef, (snapshot) => {
+      const data = snapshot.val() || {};
+      dispatch(setAllWatchedEpisodes(data));
+    });
+
+    return () => unsubscribe();
+  }, [uid]);
 
   useEffect(() => {
     const fetchSeasonsAndEpisodes = async () => {
@@ -46,13 +62,25 @@ export const SeasonEpisodes = ({ seriesId }) => {
     fetchSeasonsAndEpisodes();
   }, [seriesId]);
 
-  const handleEpisodeWatchedClick = (episodeId) => {
-    if (!uid) return alert("Увійдіть, щоб позначити як переглянуте.");
-    dispatch(setWatched({ episodeId, uid }));
-  };
-
   const handleOpen = (value) => {
     setOpen(open === value ? null : value);
+  };
+
+  const handleEpisodeWatchedClick = async (episodeId) => {
+    if (!uid) return alert("Увійдіть, щоб позначити як переглянуте.");
+
+    const newStatus = !watchedEpisodes[episodeId];
+    const updatedWatchedEpisodes = {
+      ...watchedEpisodes,
+      [episodeId]: newStatus,
+    };
+
+    dispatch(setWatched({ episodeId, uid }));
+    try {
+      await updateWatchedEpisodes(uid, updatedWatchedEpisodes); // Замінив тут
+    } catch (err) {
+      console.error("Помилка оновлення переглянутих епізодів:", err);
+    }
   };
 
   return (

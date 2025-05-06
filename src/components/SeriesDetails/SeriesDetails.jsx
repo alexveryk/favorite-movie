@@ -18,6 +18,7 @@ import { truncatedText } from "../../utils/textUtils";
 import { TrailerModal } from "../TrailerModal/TrailerModal";
 import { SimilarSeriesList } from "../SimilarSeriesList/SimilarSeriesList";
 import { SeasonEpisodes } from "../SeasonEpisodes/SeasonEpisodes";
+import { updateUserFavorites } from "../../firebase/firebase";
 
 const imgUrl = "/posterNotAvailable.png";
 
@@ -38,43 +39,6 @@ export const SeriesDetails = () => {
   const [season, setSeason] = useState(null);
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(1);
-
-  // useEffect(() => {
-  //   const fetchSeasonsAndEpisodes = async () => {
-  //     try {
-  //       const seriesData = await getSeriesDetails(id);
-  //       setSeries(seriesData);
-  //       const seasonsData = seriesData.seasons || [];
-  //       setSeasons(seasonsData);
-
-  //       const episodesData = {};
-  //       for (const season of seasonsData) {
-  //         const seasonEpisodes = await getSeasonEpisodes(
-  //           id,
-  //           season.season_number
-  //         );
-  //         episodesData[season.season_number] = seasonEpisodes.episodes || [];
-  //       }
-  //       setEpisodes(episodesData);
-  //     } catch (err) {
-  //       console.error("Помилка завантаження даних сезонів та серій:", err);
-  //     }
-  //   };
-  //   fetchSeasonsAndEpisodes();
-  // }, [id]);
-
-  // useEffect(() => {
-  //   const fetchSeasons = async () => {
-  //     try {
-  //       const seriesData = await getSeriesDetails(id);
-  //       setSeasons(seriesData.seasons || []); // отримуємо сезони
-  //       fetchEpisodes(seriesData.seasons[0].id); // за замовчуванням завантажуємо перший сезон
-  //     } catch (err) {
-  //       console.error("Помилка завантаження даних сезону:", err);
-  //     }
-  //   };
-  //   fetchSeasons();
-  // }, [id]);
 
   useEffect(() => {
     const fetchSeriesData = async () => {
@@ -125,7 +89,6 @@ export const SeriesDetails = () => {
         setVideos(videoRes.results || []);
         setSimilar(similarRes.results || []);
 
-        // отримуємо серії лише першого сезону (наприклад)
         const episodesRes = await getSeasonEpisodes(id, 1);
         setEpisodes(episodesRes.episodes || []);
       } catch (err) {

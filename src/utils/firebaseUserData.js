@@ -5,3 +5,8 @@ export const updateUserMovies = async (uid, { favorites, watched }) => {
   const userRef = ref(database, "users/" + uid);
   await update(userRef, { favorites, watched });
 };
+
+export const updateWatchedEpisodes = async (uid, watchedEpisodes) => {
+  const userRef = ref(database, `users/${uid}/watchedEpisodes`);
+  await update(userRef, watchedEpisodes);
+};
