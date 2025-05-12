@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTrending } from "../../services/api";
 import { MovieCard } from "../MovieCard/MovieCard.jsx";
-// import { Button } from "../Button/Button.jsx";
 import { toggleFavorite, toggleWatched } from "../../store/moviesSlice";
 import { ChevronUp } from "lucide-react";
 

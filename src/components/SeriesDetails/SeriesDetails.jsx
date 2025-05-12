@@ -168,9 +168,6 @@ export const SeriesDetails = () => {
               <strong>Рік:</strong> {series.first_air_date?.slice(0, 4)}
             </p>
             <p>
-              <strong>Тривалість:</strong> {series.episode_run_time?.[0]} хв
-            </p>
-            <p>
               <strong>Актори:</strong> {topCast}
             </p>
             {director && (
@@ -203,19 +200,7 @@ export const SeriesDetails = () => {
 
             <div>
               <p className="text-white font-semibold mt-4">Опис:</p>
-              <p className="text-gray-200">
-                {isOverviewExpanded
-                  ? series.overview
-                  : series.overview.slice(0, 200) +
-                    (series.overview.length > 200 ? "..." : "")}
-              </p>
-              {series.overview.length > 200 && (
-                <button
-                  className="text-sm text-yellow-400 hover:underline mt-1"
-                  onClick={() => setIsOverviewExpanded((prev) => !prev)}>
-                  {isOverviewExpanded ? "Згорнути" : "Читати більше"}
-                </button>
-              )}
+              <p className="text-gray-200">{series.overview}</p>
             </div>
           </div>
         </div>

@@ -144,6 +144,8 @@ export const SeasonEpisodes = ({ seriesId }) => {
             <AccordionBody className="bg-black text-white px-6 py-4">
               <div className="flex flex-col gap-4 w-full">
                 {season.episodes?.map((ep) => {
+                  const isFuture =
+                    ep.air_date && new Date(ep.air_date) > new Date();
                   const formattedDate = ep.air_date
                     ? new Date(ep.air_date).toLocaleDateString("uk-UA")
                     : "Невідомо";
@@ -164,14 +166,32 @@ export const SeasonEpisodes = ({ seriesId }) => {
                           дата виходу: {formattedDate}
                         </div>
                         <div className="sm:w-auto">
+                          {/* <button
+                              onClick={() => handleEpisodeWatchedClick(ep.id)}
+                              className={`px-4 py-1 rounded-full w-full sm:w-auto whitespace-nowrap transition-colors duration-200 ${
+                                watchedEpisodes[ep.id]
+                                  ? "bg-green-500 text-white"
+                                  : "bg-gray-300 text-gray-800"
+                              }`}>
+                              {watchedEpisodes[ep.id]
+                                ? "Переглянуто"
+                                : "Позначити як переглянуте"}
+                            </button> */}
                           <button
-                            onClick={() => handleEpisodeWatchedClick(ep.id)}
+                            onClick={() => {
+                              if (!isFuture) handleEpisodeWatchedClick(ep.id);
+                            }}
+                            disabled={isFuture}
                             className={`px-4 py-1 rounded-full w-full sm:w-auto whitespace-nowrap transition-colors duration-200 ${
-                              watchedEpisodes[ep.id]
+                              isFuture
+                                ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                                : watchedEpisodes[ep.id]
                                 ? "bg-green-500 text-white"
                                 : "bg-gray-300 text-gray-800"
                             }`}>
-                            {watchedEpisodes[ep.id]
+                            {isFuture
+                              ? "Очікується"
+                              : watchedEpisodes[ep.id]
                               ? "Переглянуто"
                               : "Позначити як переглянуте"}
                           </button>

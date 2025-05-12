@@ -60,12 +60,11 @@ export const SeriesList = () => {
   };
 
   return (
-    <div>
+    <div className="p-6">
       {loading && <div className="spinner"></div>}
       {series.length > 0 ? (
         <>
-          {/* Основна сітка для серіалів */}
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 px-4 py-6">
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
             {series.map((show) => {
               const isFavorite = favorites?.some((s) => s?.id === show.id);
               const isWatched = watched?.some((s) => s?.id === show.id);
@@ -83,7 +82,6 @@ export const SeriesList = () => {
               );
             })}
           </ul>
-
           {/* Кнопка для завантаження ще */}
           <button
             onClick={handleLoadMore}
@@ -96,11 +94,11 @@ export const SeriesList = () => {
         <p className="text-center text-gray-600">No series to show.</p>
       )}
 
-      {/* Кнопка скролу вгору */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 bg-blue-500 text-white rounded-full p-2 shadow-lg hover:bg-blue-600">
+          className="fixed bottom-6 right-6 bg-gray-800 text-white p-3 rounded-full shadow-lg hover:bg-gray-700 transition z-100 border-amber-50 border-2"
+          aria-label="Прокрутити вгору">
           <ChevronUp size={24} />
         </button>
       )}

@@ -195,18 +195,8 @@ export const MovieDetails = () => {
 
                 <p className="text-white font-semibold mb-1">Опис:</p>
                 <p className="text-gray-200 leading-relaxed">
-                  {isOverviewExpanded
-                    ? movie.overview
-                    : movie.overview.slice(0, 200) +
-                      (movie.overview.length > 200 ? "..." : "")}
+                  {movie.overview}
                 </p>
-                {movie.overview.length > 200 && (
-                  <button
-                    className="text-sm text-yellow-400 mt-1 hover:underline"
-                    onClick={() => setIsOverviewExpanded((prev) => !prev)}>
-                    {isOverviewExpanded ? "Згорнути" : "Читати більше"}
-                  </button>
-                )}
               </div>
             </div>
           </div>
