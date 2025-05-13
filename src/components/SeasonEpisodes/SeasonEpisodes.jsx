@@ -84,7 +84,12 @@ export const SeasonEpisodes = ({ seriesId }) => {
   };
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto bg-black text-white p-6">
+    <div
+      className="w-full max-w-[1400px] mx-auto text-white p-6"
+      // style={{
+      //   backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%)`,
+      // }}>
+    >
       {seasons.map((season, index) => {
         const total = season.episodes.length;
         const watched = season.episodes.filter(

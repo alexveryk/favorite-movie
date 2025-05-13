@@ -7,7 +7,7 @@ export const SimilarSeriesList = ({ similarSeries }) => {
   if (!similarSeries?.length) return null;
 
   return (
-    <div className="py-10 px-6 bg-black">
+    <div className="py-10 px-6">
       <div className="max-w-7xl mx-auto">
         <h3 className="text-xl font-bold mb-4 text-white">Подібні серіали:</h3>
         <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">

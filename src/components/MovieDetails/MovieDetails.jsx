@@ -114,9 +114,7 @@ export const MovieDetails = () => {
       <div
         className="bg-cover bg-center text-white p-6"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.6)), 
-      linear-gradient(to bottom, transparent, transparent 60%, #111 70%, #1a1a1a 90%, #000000 100%), 
-      url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+          backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
         }}>
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
           <img
@@ -199,9 +197,58 @@ export const MovieDetails = () => {
                 </p>
               </div>
             </div>
+            {showTrailer && trailer && (
+              <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+                <div className="bg-gray-900 p-4 rounded-xl w-full max-w-3xl relative">
+                  <button
+                    className="absolute top-2 right-2 text-white text-2xl"
+                    onClick={() => setShowTrailer(false)}>
+                    &times;
+                  </button>
+                  <iframe
+                    className="w-full aspect-video rounded"
+                    src={`https://www.youtube.com/embed/${trailer.key}`}
+                    title="YouTube trailer"
+                    allowFullScreen></iframe>
+                </div>
+              </div>
+            )}
           </div>
+        </div>
 
-          {showTrailer && trailer && (
+        <div className="py-10 px-6">
+          <div className="max-w-6xl mx-auto">
+            <h3 className="text-xl font-bold mb-4 text-white">
+              Подібні фільми:
+            </h3>
+
+            <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
+              {similarMovies.map((movie) => (
+                <div key={movie.id} className="w-[150px] flex-shrink-0">
+                  <Link to={`/movies/${movie.id}`} className="block">
+                    <img
+                      loading="lazy"
+                      src={
+                        movie.poster_path
+                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                          : "imgUrl"
+                      }
+                      alt={movie.title}
+                      className="rounded-lg min-w-[150px] min-h-[225px] object-cover"
+                    />
+
+                    <p className="text-center text-sm text-white mt-1">
+                      {truncatedText(movie.title, 16)}
+                    </p>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* {showTrailer && trailer && (
             <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
               <div className="bg-gray-900 p-4 rounded-xl w-full max-w-3xl relative">
                 <button
@@ -252,7 +299,7 @@ export const MovieDetails = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

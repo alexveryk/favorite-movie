@@ -136,11 +136,10 @@ export const SeriesDetails = () => {
       <div
         className="bg-cover bg-center text-white p-6"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.6)), 
-          linear-gradient(to bottom, transparent 60%, #111 90%, #000 100%), 
+          backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%),
           url(https://image.tmdb.org/t/p/original${series.backdrop_path})`,
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
           <img
             src={
               series.poster_path
@@ -204,6 +203,8 @@ export const SeriesDetails = () => {
             </div>
           </div>
         </div>
+        <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
+        <SimilarSeriesList similarSeries={similar} />
       </div>
       {trailer && showTrailer && (
         <TrailerModal
@@ -211,8 +212,6 @@ export const SeriesDetails = () => {
           onClose={() => setShowTrailer(false)}
         />
       )}
-      <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
-      <SimilarSeriesList similarSeries={similar} />
     </>
   );
 };
