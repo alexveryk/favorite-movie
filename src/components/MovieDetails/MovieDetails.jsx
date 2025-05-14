@@ -109,14 +109,12 @@ export const MovieDetails = () => {
 
   return (
     <>
-      {/* Movie card */}
-
       <div
         className="bg-cover bg-center text-white p-6"
         style={{
           backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8 ">
           <img
             src={
               movie.poster_path

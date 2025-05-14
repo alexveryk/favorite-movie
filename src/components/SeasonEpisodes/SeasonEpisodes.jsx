@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setWatched } from "../../store/seriesSlice";
+import { setWatched, setAllWatchedEpisodes } from "../../store/seriesSlice";
 import { getSeriesDetails, getSeasonEpisodes } from "../../services/api";
 import { updateWatchedEpisodes } from "../../utils/firebaseUserData.js";
-import { setAllWatchedEpisodes } from "../../store/seriesSlice";
 
 import {
   Accordion,
@@ -32,7 +31,7 @@ export const SeasonEpisodes = ({ seriesId }) => {
     });
 
     return () => unsubscribe();
-  }, [uid]);
+  }, [uid, dispatch]);
 
   useEffect(() => {
     const fetchSeasonsAndEpisodes = async () => {
@@ -77,16 +76,14 @@ export const SeasonEpisodes = ({ seriesId }) => {
 
     dispatch(setWatched({ episodeId, uid }));
     try {
-      await updateWatchedEpisodes(uid, updatedWatchedEpisodes); // Замінив тут
+      await updateWatchedEpisodes(uid, updatedWatchedEpisodes);
     } catch (err) {
       console.error("Помилка оновлення переглянутих епізодів:", err);
     }
   };
 
   return (
-    <div
-      // className="w-full max-w-[1400px] mx-auto text-white p-6"
-      className="max-w-6xl mx-auto flex flex-col md:flex-col items-start ">
+    <div className="max-w-6xl mx-auto flex flex-col md:flex-col items-start p-4 ">
       {seasons.map((season, index) => {
         const total = season.episodes.length;
         const watched = season.episodes.filter(
@@ -143,7 +140,7 @@ export const SeasonEpisodes = ({ seriesId }) => {
               </div>
             </AccordionHeader>
 
-            <AccordionBody className="bg-black text-white px-6 py-4">
+            <AccordionBody className="bg-gray-700 text-white px-6 py-4">
               <div className="flex flex-col gap-4 w-full">
                 {season.episodes?.map((ep) => {
                   const isFuture =
@@ -168,17 +165,6 @@ export const SeasonEpisodes = ({ seriesId }) => {
                           дата виходу: {formattedDate}
                         </div>
                         <div className="sm:w-auto">
-                          {/* <button
-                              onClick={() => handleEpisodeWatchedClick(ep.id)}
-                              className={`px-4 py-1 rounded-full w-full sm:w-auto whitespace-nowrap transition-colors duration-200 ${
-                                watchedEpisodes[ep.id]
-                                  ? "bg-green-500 text-white"
-                                  : "bg-gray-300 text-gray-800"
-                              }`}>
-                              {watchedEpisodes[ep.id]
-                                ? "Переглянуто"
-                                : "Позначити як переглянуте"}
-                            </button> */}
                           <button
                             onClick={() => {
                               if (!isFuture) handleEpisodeWatchedClick(ep.id);

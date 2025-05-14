@@ -40,38 +40,29 @@ export const SeriesDetails = () => {
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(1);
 
-  useEffect(() => {
-    const fetchSeriesData = async () => {
-      try {
-        const seriesData = await getSeriesDetails(id);
-        setSeries(seriesData);
-        const seasonsData = seriesData.seasons || [];
-        setSeasons(seasonsData);
+  // useEffect(() => {
+  //   const fetchSeriesData = async () => {
+  //     try {
+  //       const seriesData = await getSeriesDetails(id);
+  //       setSeries(seriesData);
+  //       const seasonsData = seriesData.seasons || [];
+  //       setSeasons(seasonsData);
 
-        const episodesData = {};
-        for (const season of seasonsData) {
-          const seasonEpisodes = await getSeasonEpisodes(
-            id,
-            season.season_number
-          );
-          episodesData[season.season_number] = seasonEpisodes.episodes || [];
-        }
-        setEpisodes(episodesData);
-      } catch (err) {
-        console.error("Помилка завантаження даних серіалу:", err);
-      }
-    };
-    fetchSeriesData();
-  }, [id]);
-
-  const fetchEpisodes = async (seasonId) => {
-    try {
-      const seasonData = await getSeasonEpisodes(id, seasonId);
-      setEpisodes(seasonData.episodes || []);
-    } catch (err) {
-      console.error("Помилка завантаження серій:", err);
-    }
-  };
+  //       const episodesData = {};
+  //       for (const season of seasonsData) {
+  //         const seasonEpisodes = await getSeasonEpisodes(
+  //           id,
+  //           season.season_number
+  //         );
+  //         episodesData[season.season_number] = seasonEpisodes.episodes || [];
+  //       }
+  //       setEpisodes(episodesData);
+  //     } catch (err) {
+  //       console.error("Помилка завантаження даних серіалу:", err);
+  //     }
+  //   };
+  //   fetchSeriesData();
+  // }, [id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,19 +75,56 @@ export const SeriesDetails = () => {
             getSimilarSeries(id),
           ]
         );
+
         setSeries(seriesRes);
         setCredits(creditsRes);
         setVideos(videoRes.results || []);
         setSimilar(similarRes.results || []);
+        setSeasons(seriesRes.seasons || []);
 
         const episodesRes = await getSeasonEpisodes(id, 1);
         setEpisodes(episodesRes.episodes || []);
       } catch (err) {
-        console.error("Помилка завантаження:", err);
+        console.error("Помилка завантаження даних серіалу:", err);
       }
     };
+
     fetchData();
   }, [id]);
+
+  // const fetchEpisodes = async (seasonId) => {
+  //   try {
+  //     const seasonData = await getSeasonEpisodes(id, seasonId);
+  //     setEpisodes(seasonData.episodes || []);
+  //   } catch (err) {
+  //     console.error("Помилка завантаження серій:", err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const [seriesRes, creditsRes, videoRes, similarRes] = await Promise.all(
+  //         [
+  //           getSeriesDetails(id),
+  //           getSeriesCredits(id),
+  //           getSeriesVideos(id),
+  //           getSimilarSeries(id),
+  //         ]
+  //       );
+  //       setSeries(seriesRes);
+  //       setCredits(creditsRes);
+  //       setVideos(videoRes.results || []);
+  //       setSimilar(similarRes.results || []);
+
+  //       const episodesRes = await getSeasonEpisodes(id, 1);
+  //       setEpisodes(episodesRes.episodes || []);
+  //     } catch (err) {
+  //       console.error("Помилка завантаження:", err);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [id]);
 
   const isFavorite = useMemo(
     () => favorites?.some((s) => s.id === +id),
@@ -136,10 +164,15 @@ export const SeriesDetails = () => {
       <div
         className="bg-cover bg-center text-white"
         style={{
-          backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%),
-          url(https://image.tmdb.org/t/p/original${series.backdrop_path})`,
+          backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), 
+        linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%),
+        url(https://image.tmdb.org/t/p/original${series.backdrop_path})`,
+          minHeight: "100vh",
+          backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8  mb-8 pt-6">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8  mb-8 p-4">
           <img
             src={
               series.poster_path
@@ -171,7 +204,7 @@ export const SeriesDetails = () => {
             </p>
             {director && (
               <p>
-                <strong>Режисер:</strong> {director.name}
+                <strong>Режисер:</strong> {director}
               </p>
             )}
 
@@ -206,6 +239,10 @@ export const SeriesDetails = () => {
         <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
         <SimilarSeriesList similarSeries={similar} />
       </div>
+      {/* <div className="max-w-6xl mx-auto px-4">
+        <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
+        <SimilarSeriesList similarSeries={similar} />
+      </div> */}
       {trailer && showTrailer && (
         <TrailerModal
           trailerKey={trailer.key}
