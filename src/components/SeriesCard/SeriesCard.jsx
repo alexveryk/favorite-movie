@@ -112,8 +112,8 @@ export const SeriesCard = ({ series }) => {
       </div>
 
       <div className="bg-gray-200 py-3 px-4 text-center">
-        <h2 className="text-lg font-semibold text-gray-800 mb-2">
-          {truncatedText(series.name)}
+        <h2 className="text-base font-semibold text-gray-800 mb-2">
+          {truncatedText(series.name, 14)}
         </h2>
         <p className="text-gray-600 font-bold">
           {series.first_air_date.slice(0, 4)}{" "}

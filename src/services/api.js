@@ -139,3 +139,36 @@ export const getSeasonEpisodes = async (series_id, season_number) => {
     return { episodes: [] };
   }
 };
+
+
+// search All
+
+export const searchAll = async (query, page = 1) => {
+  try {
+    const [movies, series] = await Promise.all([
+      searchMovies(query, page),
+      searchSeries(query, page),
+    ]);
+
+    const movieResults = movies.data?.results.map((item) => ({
+      ...item,
+      media_type: "movie",
+    })) || [];
+
+    const seriesResults = series?.results.map((item) => ({
+      ...item,
+      media_type: "tv",
+    })) || [];
+
+    return {
+      query,
+      results: [...movieResults, ...seriesResults],
+    };
+  } catch (error) {
+    console.error("Error in searchAll:", error);
+    return {
+      query,
+      results: [],
+    };
+  }
+};

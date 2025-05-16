@@ -1,23 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const storedData = JSON.parse(localStorage.getItem("searchData")) || {
+  query: "",
+  results: [],
+};
+
 const searchSlice = createSlice({
   name: "search",
   initialState: {
-    results: JSON.parse(localStorage.getItem("searchResults")) || [],
-    query: localStorage.getItem("searchQuery") || "",
+    query: storedData.query,
+    results: storedData.results,
   },
   reducers: {
     setSearchResults: (state, action) => {
-      state.results = action.payload.results;
       state.query = action.payload.query;
-      localStorage.setItem("searchResults", JSON.stringify(state.results));
-      localStorage.setItem("searchQuery", state.query);
+      state.results = action.payload.results || [];
+
+
+      localStorage.setItem(
+        "searchData",
+        JSON.stringify({
+          query: state.query,
+          results: state.results,
+        })
+      );
     },
     clearSearchResults: (state) => {
-      state.results = [];
       state.query = "";
-      localStorage.removeItem("searchResults");
-      localStorage.removeItem("searchQuery");
+      state.results = [];
+      localStorage.removeItem("searchData");
     },
   },
 });

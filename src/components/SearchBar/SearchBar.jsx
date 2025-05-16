@@ -31,6 +31,10 @@ export const SearchBar = ({ onSearchDone }) => {
     navigate("/");
   };
 
+  //
+  
+  //
+
   return (
     <form
       onSubmit={handleSearch}

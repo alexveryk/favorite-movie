@@ -7,7 +7,6 @@ export const Home = () => {
     <>
       <div className="max-w-[1400px] mx-auto">
         <TrendingSlider />
-        <SearchResults />
         <MovieNews />
       </div>
     </>
