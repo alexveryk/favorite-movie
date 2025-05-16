@@ -19,6 +19,7 @@ import { TrailerModal } from "../TrailerModal/TrailerModal";
 import { SimilarSeriesList } from "../SimilarSeriesList/SimilarSeriesList";
 import { SeasonEpisodes } from "../SeasonEpisodes/SeasonEpisodes";
 import { updateUserFavorites } from "../../firebase/firebase";
+import { Similar } from "../Similar/Similar";
 
 const imgUrl = "/posterNotAvailable.png";
 
@@ -39,30 +40,6 @@ export const SeriesDetails = () => {
   const [season, setSeason] = useState(null);
   const [seasons, setSeasons] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(1);
-
-  // useEffect(() => {
-  //   const fetchSeriesData = async () => {
-  //     try {
-  //       const seriesData = await getSeriesDetails(id);
-  //       setSeries(seriesData);
-  //       const seasonsData = seriesData.seasons || [];
-  //       setSeasons(seasonsData);
-
-  //       const episodesData = {};
-  //       for (const season of seasonsData) {
-  //         const seasonEpisodes = await getSeasonEpisodes(
-  //           id,
-  //           season.season_number
-  //         );
-  //         episodesData[season.season_number] = seasonEpisodes.episodes || [];
-  //       }
-  //       setEpisodes(episodesData);
-  //     } catch (err) {
-  //       console.error("Помилка завантаження даних серіалу:", err);
-  //     }
-  //   };
-  //   fetchSeriesData();
-  // }, [id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,40 +68,6 @@ export const SeriesDetails = () => {
 
     fetchData();
   }, [id]);
-
-  // const fetchEpisodes = async (seasonId) => {
-  //   try {
-  //     const seasonData = await getSeasonEpisodes(id, seasonId);
-  //     setEpisodes(seasonData.episodes || []);
-  //   } catch (err) {
-  //     console.error("Помилка завантаження серій:", err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const [seriesRes, creditsRes, videoRes, similarRes] = await Promise.all(
-  //         [
-  //           getSeriesDetails(id),
-  //           getSeriesCredits(id),
-  //           getSeriesVideos(id),
-  //           getSimilarSeries(id),
-  //         ]
-  //       );
-  //       setSeries(seriesRes);
-  //       setCredits(creditsRes);
-  //       setVideos(videoRes.results || []);
-  //       setSimilar(similarRes.results || []);
-
-  //       const episodesRes = await getSeasonEpisodes(id, 1);
-  //       setEpisodes(episodesRes.episodes || []);
-  //     } catch (err) {
-  //       console.error("Помилка завантаження:", err);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [id]);
 
   const isFavorite = useMemo(
     () => favorites?.some((s) => s.id === +id),
@@ -237,12 +180,9 @@ export const SeriesDetails = () => {
           </div>
         </div>
         <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
-        <SimilarSeriesList similarSeries={similar} />
+        <Similar similars={similar}/>
       </div>
-      {/* <div className="max-w-6xl mx-auto px-4">
-        <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
-        <SimilarSeriesList similarSeries={similar} />
-      </div> */}
+  
       {trailer && showTrailer && (
         <TrailerModal
           trailerKey={trailer.key}

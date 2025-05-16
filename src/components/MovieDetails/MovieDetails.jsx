@@ -10,8 +10,9 @@ import {
 } from "../../services/api";
 import { toast } from "react-toastify";
 import { truncatedText } from "../../utils/textUtils";
+import { Similar } from "../Similar/Similar";
 
-// import img from "../../../public/posterNotAvailable";
+
 
 export const MovieDetails = () => {
   const { id } = useParams();
@@ -220,7 +221,7 @@ export const MovieDetails = () => {
               Подібні фільми:
             </h3>
 
-            <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
+            {/* <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
               {similarMovies.map((movie) => (
                 <div key={movie.id} className="w-[150px] flex-shrink-0">
                   <Link to={`/movies/${movie.id}`} className="block">
@@ -241,7 +242,8 @@ export const MovieDetails = () => {
                   </Link>
                 </div>
               ))}
-            </div>
+            </div> */}
+            <Similar similars={similarMovies}/>
           </div>
         </div>
       </div>
