@@ -105,7 +105,7 @@ export const SeriesDetails = () => {
   return (
     <>
       <div
-        className="bg-cover bg-center text-white"
+        className="bg-cover bg-center text-white p-4"
         style={{
           backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), 
         linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%),
@@ -115,7 +115,7 @@ export const SeriesDetails = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8  mb-8 py-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
           <img
             src={
               series.poster_path
@@ -178,9 +178,11 @@ export const SeriesDetails = () => {
               <p>{series.overview ? series.overview : "Поки що тут порожньо, але ми скоро додамо більше інформації!" }</p>
             </div>
           </div>
+         
         </div>
-        <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8 "> <Similar similars={similar}/></div>
+        
+         <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
+        <Similar similars={similar}/>
         
       </div>
   

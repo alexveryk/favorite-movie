@@ -94,8 +94,7 @@ export const Menu = () => {
               Серіали
             </NavLink>
             <div className="px-4">
-              {/* <SearchBar onSearchDone={() => setIsMenuOpen(false)} /> */}
-              <SearchBar />
+              <SearchBar onSearchDone={() => setIsMenuOpen(false)} />
             </div>
             {/* Authorization (mobile) */}
             <div className="flex flex-col items-center gap-3 mt-4 mb-4">

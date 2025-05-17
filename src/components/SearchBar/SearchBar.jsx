@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { searchMovies } from "../../services/api";
 import { setSearchResults } from "../../store/searchSlice";
 
-export const SearchBar = ({ onSearchDone }) => {
+export const SearchBar = ({ onSearchDone, setIsMenuOpen }) => {
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,10 +31,6 @@ export const SearchBar = ({ onSearchDone }) => {
     navigate("/");
   };
 
-  //
-  
-  //
-
   return (
     <form
       onSubmit={handleSearch}
@@ -59,7 +55,8 @@ export const SearchBar = ({ onSearchDone }) => {
 
       <button
         type="submit"
-        className="bg-[#51cda6] text-white px-4 py-2 rounded-full hover:bg-[#3bb28f] transition-all">
+        className="bg-[#51cda6] text-white px-4 py-2 rounded-full hover:bg-[#3bb28f] transition-all"
+        >
         🔍
       </button>
     </form>
