@@ -7,8 +7,8 @@ export const Similar = ({ similars }) => {
   if (!similars?.length) return null;
 
   return (
-    <div className="py-10 px-6">
-      <div className="max-w-6xl mx-auto p-4">
+    <div>
+      <div className="max-w-6xl mx-auto py-8">
         <h3 className="text-xl font-bold mb-4 text-white">Подібне:</h3>
         <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
           {similars.map((item) => {

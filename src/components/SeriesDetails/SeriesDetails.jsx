@@ -115,7 +115,7 @@ export const SeriesDetails = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8  mb-8 p-4">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8  mb-8 py-4">
           <img
             src={
               series.poster_path
@@ -180,7 +180,8 @@ export const SeriesDetails = () => {
           </div>
         </div>
         <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
-        <Similar similars={similar}/>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8 "> <Similar similars={similar}/></div>
+        
       </div>
   
       {trailer && showTrailer && (

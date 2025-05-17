@@ -9,10 +9,7 @@ import {
   getSimilarMovies,
 } from "../../services/api";
 import { toast } from "react-toastify";
-import { truncatedText } from "../../utils/textUtils";
 import { Similar } from "../Similar/Similar";
-
-
 
 
 export const MovieDetails = () => {
@@ -112,7 +109,7 @@ export const MovieDetails = () => {
   return (
     <>
       <div
-        className="bg-cover bg-center text-white p-6"
+        className="bg-cover bg-center text-white py-6"
         style={{
           backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
         }}>
@@ -209,12 +206,8 @@ export const MovieDetails = () => {
             )}
           </div>
         </div>
-
-        <div className="py-10 px-6">
-          <div className="max-w-6xl mx-auto">
+       
             <Similar similars={similarMovies}/>
-          </div>
-        </div>
       </div>
     </>
   );
