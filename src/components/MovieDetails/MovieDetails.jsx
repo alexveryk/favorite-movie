@@ -14,6 +14,7 @@ import { Similar } from "../Similar/Similar";
 
 
 
+
 export const MovieDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -125,7 +126,6 @@ export const MovieDetails = () => {
             alt={movie.title}
             className="rounded-xl shadow-lg md:w-[320px] w-full max-w-[320px]"
           />
-
           <div className="flex-1 space-y-4">
             <h1 className="text-4xl font-bold">{movie.title}</h1>
 
@@ -172,7 +172,6 @@ export const MovieDetails = () => {
                     : "Позначити як переглянутий"}
                 </button>
               </div>
-
               {trailer && (
                 <div>
                   <button
@@ -182,18 +181,14 @@ export const MovieDetails = () => {
                   </button>
                 </div>
               )}
-
               <div>
                 <button
                   onClick={shareMovie}
                   className="px-4 py-2 rounded-lg bg-green-500 text-black font-semibold mb-2">
                   Поділитися
                 </button>
-
                 <p className="text-white font-semibold mb-1">Опис:</p>
-                <p className="text-gray-200 leading-relaxed">
-                  {movie.overview}
-                </p>
+                 <p>{movie.overview ? movie.overview : "Поки що тут порожньо, але ми скоро додамо більше інформації!" }</p>
               </div>
             </div>
             {showTrailer && trailer && (
@@ -217,89 +212,10 @@ export const MovieDetails = () => {
 
         <div className="py-10 px-6">
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-xl font-bold mb-4 text-white">
-              Подібні фільми:
-            </h3>
-
-            {/* <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
-              {similarMovies.map((movie) => (
-                <div key={movie.id} className="w-[150px] flex-shrink-0">
-                  <Link to={`/movies/${movie.id}`} className="block">
-                    <img
-                      loading="lazy"
-                      src={
-                        movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                          : "imgUrl"
-                      }
-                      alt={movie.title}
-                      className="rounded-lg min-w-[150px] min-h-[225px] object-cover"
-                    />
-
-                    <p className="text-center text-sm text-white mt-1">
-                      {truncatedText(movie.title, 16)}
-                    </p>
-                  </Link>
-                </div>
-              ))}
-            </div> */}
             <Similar similars={similarMovies}/>
           </div>
         </div>
       </div>
-
-      {/* {showTrailer && trailer && (
-            <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-              <div className="bg-gray-900 p-4 rounded-xl w-full max-w-3xl relative">
-                <button
-                  className="absolute top-2 right-2 text-white text-2xl"
-                  onClick={() => setShowTrailer(false)}>
-                  &times;
-                </button>
-                <iframe
-                  className="w-full aspect-video rounded"
-                  src={`https://www.youtube.com/embed/${trailer.key}`}
-                  title="YouTube trailer"
-                  allowFullScreen></iframe>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div
-        className="py-10 px-6"
-        style={{
-          backgroundImage:
-            "linear-gradient(to bottom, #000000, #1a1a1a, #2d2d2d, #434343, #595959, #707070, #808080, #9e9e9e, #b5b5b5, #c7c7c7, #d9d9d9, #e6e6e6, #f2f2f2, #f5f5f5, #fafafa, #ffffff, #f7f7f7, #f4f4f4, #f1f1f1, #e7e7e7, #e1e1e1, #d9d9d9, #d3d3d3, #cccccc, #c6c6c6, #bdbdbd, #b3b3b3, #a9a9a9, #9e9e9e, #929292, #868686, #7a7a7a, #6f6f6f, #636363, #595959, #4e4e4e, #434343, #393939, #2e2e2e, #232323, #191919, #0f0f0f",
-        }}>
-        <div className="max-w-6xl mx-auto">
-          <h3 className="text-xl font-bold mb-4 text-white">Подібні фільми:</h3>
-
-          <div className="flex gap-4 overflow-x-auto py-2 scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-800">
-            {similarMovies.map((movie) => (
-              <div key={movie.id} className="w-[150px] flex-shrink-0">
-                <Link to={`/movies/${movie.id}`} className="block">
-                  <img
-                    loading="lazy"
-                    src={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "imgUrl"
-                    }
-                    alt={movie.title}
-                    className="rounded-lg min-w-[150px] min-h-[225px] object-cover"
-                  />
-
-                  <p className="text-center text-sm text-white mt-1">
-                    {truncatedText(movie.title, 16)}
-                  </p>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div> */}
     </>
   );
 };

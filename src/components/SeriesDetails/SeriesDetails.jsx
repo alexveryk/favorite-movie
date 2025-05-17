@@ -175,7 +175,7 @@ export const SeriesDetails = () => {
 
             <div>
               <p className="text-white font-semibold mt-4">Опис:</p>
-              <p className="text-gray-200">{series.overview}</p>
+              <p>{series.overview ? series.overview : "Поки що тут порожньо, але ми скоро додамо більше інформації!" }</p>
             </div>
           </div>
         </div>
