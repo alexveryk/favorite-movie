@@ -11,7 +11,6 @@ import {
 import { toast } from "react-toastify";
 import { Similar } from "../Similar/Similar";
 
-
 export const MovieDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -109,11 +108,11 @@ export const MovieDetails = () => {
   return (
     <>
       <div
-        className="bg-cover bg-center text-white p-4"
+        className="bg-cover bg-center text-white p-6 "
         style={{
           backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%), url(https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8 ">
+        <div className="max-w-6xl flex flex-col md:flex-row items-start gap-8 mb-12">
           <img
             src={
               movie.poster_path
@@ -185,7 +184,11 @@ export const MovieDetails = () => {
                   Поділитися
                 </button>
                 <p className="text-white font-semibold mb-1">Опис:</p>
-                 <p>{movie.overview ? movie.overview : "Поки що тут порожньо, але ми скоро додамо більше інформації!" }</p>
+                <p>
+                  {movie.overview
+                    ? movie.overview
+                    : "Поки що тут порожньо, але ми скоро додамо більше інформації!"}
+                </p>
               </div>
             </div>
             {showTrailer && trailer && (
@@ -206,8 +209,8 @@ export const MovieDetails = () => {
             )}
           </div>
         </div>
-       
-            <Similar similars={similarMovies}/>
+
+        <Similar similars={similarMovies} />
       </div>
     </>
   );

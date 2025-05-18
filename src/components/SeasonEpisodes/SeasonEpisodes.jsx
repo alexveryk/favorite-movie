@@ -83,7 +83,7 @@ export const SeasonEpisodes = ({ seriesId }) => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto flex flex-col md:flex-col items-start py-4 ">
+    <div className="max-w-7xl  flex flex-col md:flex-col items-start py-4 mb-8  ">
       {seasons.map((season, index) => {
         const total = season.episodes.length;
         const watched = season.episodes.filter(

@@ -42,6 +42,7 @@ export const TrendingSlider = () => {
               alt={movie.title}
               className="w-full h-[400px] object-cover"
             />
+
             <div className="absolute bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6 w-full">
               <h2 className="text-2xl font-bold">{movie.title}</h2>
               <p className="text-sm mt-2 line-clamp-2">{movie.overview}</p>

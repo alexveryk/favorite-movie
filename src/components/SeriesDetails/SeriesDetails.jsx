@@ -105,7 +105,7 @@ export const SeriesDetails = () => {
   return (
     <>
       <div
-        className="bg-cover bg-center text-white p-4"
+        className="bg-cover bg-center text-white p-6"
         style={{
           backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), 
         linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%),
@@ -115,7 +115,7 @@ export const SeriesDetails = () => {
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}>
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start gap-8">
+        <div className="max-w-6xl  flex flex-col md:flex-row items-start gap-8 mb-12">
           <img
             src={
               series.poster_path
@@ -175,17 +175,19 @@ export const SeriesDetails = () => {
 
             <div>
               <p className="text-white font-semibold mt-4">Опис:</p>
-              <p>{series.overview ? series.overview : "Поки що тут порожньо, але ми скоро додамо більше інформації!" }</p>
+              <p>
+                {series.overview
+                  ? series.overview
+                  : "Поки що тут порожньо, але ми скоро додамо більше інформації!"}
+              </p>
             </div>
           </div>
-         
         </div>
-        
-         <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
-        <Similar similars={similar}/>
-        
+
+        <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
+        <Similar similars={similar} />
       </div>
-  
+
       {trailer && showTrailer && (
         <TrailerModal
           trailerKey={trailer.key}
