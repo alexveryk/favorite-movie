@@ -55,11 +55,11 @@ export const MovieCard = ({ movie }) => {
         onClick={handleCardClick}>
         {isWatched && <WatchedLabel />}
 
-        <Rating
+        {/* <Rating
           className="absolute top-2 left-2 z-10"
           rating={movie.vote_average}
           title={movie.title}
-        />
+        /> */}
 
         <img
           loading="lazy"
@@ -112,6 +112,11 @@ export const MovieCard = ({ movie }) => {
       </div>
 
       <div className="bg-gray-200 py-3 px-4 text-center">
+        <Rating
+          className="absolute top-2 left-2 z-10"
+          rating={movie.vote_average}
+          title={movie.title}
+        />
         <h2 className="text-base font-semibold text-gray-800 mb-2">
           {truncatedText(movie.title)}
         </h2>

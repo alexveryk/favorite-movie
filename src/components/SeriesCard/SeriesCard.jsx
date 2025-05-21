@@ -55,12 +55,6 @@ export const SeriesCard = ({ series }) => {
         onClick={handleCardClick}>
         {isWatched && <WatchedLabel />}
 
-        <Rating
-          className="absolute top-2 left-2 z-10"
-          rating={series.vote_average}
-          title={series.name}
-        />
-
         <img
           loading="lazy"
           src={`https://image.tmdb.org/t/p/w500/${series.poster_path}`}
@@ -112,6 +106,12 @@ export const SeriesCard = ({ series }) => {
       </div>
 
       <div className="bg-gray-200 py-3 px-4 text-center">
+        <Rating
+          className="absolute top-2 left-2 z-10"
+          rating={series.vote_average}
+          title={series.name}
+        />
+        s
         <h2 className="text-base font-semibold text-gray-800 mb-2">
           {truncatedText(series.name, 14)}
         </h2>
