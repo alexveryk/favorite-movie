@@ -60,7 +60,7 @@ export const MovieCard = ({ movie }) => {
           alt={movie.title}
           className="w-full h-full object-cover block"
         />
-
+        <Rating rating={movie.vote_average} title={movie.title} />
         <div className="absolute top-2 right-2 flex flex-col gap-1 z-20">
           <button
             className={`bg-none border-none p-1 cursor-pointer transition-transform duration-200 ease-in-out transform hover:scale-110 ${
@@ -105,11 +105,6 @@ export const MovieCard = ({ movie }) => {
       </div>
 
       <div className="bg-gray-200 py-3 px-4 text-center">
-        <Rating
-          className="absolute top-2 left-2 z-10"
-          rating={movie.vote_average}
-          title={movie.title}
-        />
         <h2 className="text-base font-semibold text-gray-800 mb-2">
           {truncatedText(movie.title)}
         </h2>
