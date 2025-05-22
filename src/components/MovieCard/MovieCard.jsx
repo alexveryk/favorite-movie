@@ -54,13 +54,6 @@ export const MovieCard = ({ movie }) => {
         className="relative aspect-[3/4] cursor-pointer"
         onClick={handleCardClick}>
         {isWatched && <WatchedLabel />}
-
-        {/* <Rating
-          className="absolute top-2 left-2 z-10"
-          rating={movie.vote_average}
-          title={movie.title}
-        /> */}
-
         <img
           loading="lazy"
           src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}

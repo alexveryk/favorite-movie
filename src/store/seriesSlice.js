@@ -29,7 +29,7 @@ const seriesSlice = createSlice({
         state.watched.push(series);
       }
     },
-
+ 
     setWatched: (state, action) => {
       const { episodeId } = action.payload;
       state.watchedEpisodes[episodeId] = !state.watchedEpisodes[episodeId];

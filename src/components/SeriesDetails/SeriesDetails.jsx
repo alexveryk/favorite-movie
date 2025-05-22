@@ -1,11 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setWatched,
-  toggleFavorite,
-  toggleWatched,
-} from "../../store/moviesSlice";
+import { toggleFavorite,} from "../../store/moviesSlice";
 import { toast } from "react-toastify";
 import {
   getSeriesDetails,
@@ -14,11 +10,8 @@ import {
   getSimilarSeries,
   getSeasonEpisodes,
 } from "../../services/api";
-import { truncatedText } from "../../utils/textUtils";
 import { TrailerModal } from "../TrailerModal/TrailerModal";
-import { SimilarSeriesList } from "../SimilarSeriesList/SimilarSeriesList";
 import { SeasonEpisodes } from "../SeasonEpisodes/SeasonEpisodes";
-import { updateUserFavorites } from "../../firebase/firebase";
 import { Similar } from "../Similar/Similar";
 
 const imgUrl = "/posterNotAvailable.png";
@@ -105,7 +98,7 @@ export const SeriesDetails = () => {
   return (
     <>
       <div
-        className="bg-cover bg-center text-white p-6"
+        className="bg-cover bg-center text-white p-6  "
         style={{
           backgroundImage: `linear-gradient(to right, rgb(24 39 60 / 85%), rgb(65 82 105 / 60%)), 
         linear-gradient(#06050500, transparent 60%, rgb(214, 220, 229) 70%, rgb(199, 206, 218) 90%, rgb(179, 186, 198) 100%),
@@ -182,9 +175,10 @@ export const SeriesDetails = () => {
               </p>
             </div>
           </div>
+          
         </div>
-
-        <SeasonEpisodes seriesId={id} seasonNumber={selectedSeason} />
+        
+        <SeasonEpisodes  seriesId={id} seasonNumber={selectedSeason} />
         <Similar similars={similar} />
       </div>
 

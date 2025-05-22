@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWatched, setAllWatchedEpisodes } from "../../store/seriesSlice";
 import { getSeriesDetails, getSeasonEpisodes } from "../../services/api";
 import { updateWatchedEpisodes } from "../../utils/firebaseUserData.js";
+import { toast } from "react-toastify";
 
 import {
   Accordion,
@@ -66,7 +67,7 @@ export const SeasonEpisodes = ({ seriesId }) => {
   };
 
   const handleEpisodeWatchedClick = async (episodeId) => {
-    if (!uid) return alert("Увійдіть, щоб позначити як переглянуте.");
+    if (!uid) return toast.info("Увійдіть, щоб додати до улюбленого.");
 
     const newStatus = !watchedEpisodes[episodeId];
     const updatedWatchedEpisodes = {
@@ -83,7 +84,7 @@ export const SeasonEpisodes = ({ seriesId }) => {
   };
 
   return (
-    <div className="max-w-7xl  flex flex-col md:flex-col items-start py-4 mb-8  ">
+    <div className="max-w-6xl  flex flex-col md:flex-col items-start py-4 mb-8  ">
       {seasons.map((season, index) => {
         const total = season.episodes.length;
         const watched = season.episodes.filter(
@@ -140,8 +141,8 @@ export const SeasonEpisodes = ({ seriesId }) => {
               </div>
             </AccordionHeader>
 
-            <AccordionBody className="bg-gray-700 text-white px-6 py-4">
-              <div className="flex flex-col gap-4 w-full">
+            <AccordionBody className="bg-gray-400 text-white px-6 py-4">
+              <div className="flex flex-col gap-4 w-full ">
                 {season.episodes?.map((ep) => {
                   const isFuture =
                     ep.air_date && new Date(ep.air_date) > new Date();
@@ -156,12 +157,12 @@ export const SeasonEpisodes = ({ seriesId }) => {
                   return (
                     <div
                       key={ep.id}
-                      className="w-full px-4 py-3 border border-gray-700 rounded-lg shadow-sm hover:bg-gray-800 transition-all duration-200">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-300">
+                      className="w-full px-4 py-3 border border-gray-700 rounded-lg shadow-sm bg-gray-700 hover:bg-gray-600 transition-all duration-200">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-100">
                         <div className="flex-1 font-medium truncate">
                           Епізод {ep.episode_number}: {ep.name}
                         </div>
-                        <div className="text-center sm:w-1/3 text-gray-500">
+                        <div className="text-center sm:w-1/3 text-gray-100">
                           дата виходу: {formattedDate}
                         </div>
                         <div className="sm:w-auto">
@@ -172,10 +173,10 @@ export const SeasonEpisodes = ({ seriesId }) => {
                             disabled={isFuture}
                             className={`px-4 py-1 rounded-full w-full sm:w-auto whitespace-nowrap transition-colors duration-200 ${
                               isFuture
-                                ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                                ? "bg-gray-800 text-gray-100 cursor-not-allowed"
                                 : watchedEpisodes[ep.id]
-                                ? "bg-green-500 text-white"
-                                : "bg-gray-300 text-gray-800"
+                                ? "bg-green-900 text-white"
+                                : "bg-gray-800 text-gray-100"
                             }`}>
                             {isFuture
                               ? "Очікується"
@@ -185,13 +186,13 @@ export const SeasonEpisodes = ({ seriesId }) => {
                           </button>
                         </div>
                       </div>
-                      <div className="mt-2 text-sm text-gray-500 space-y-1">
+                      <div className="mt-2 text-sm text-gray-100 space-y-1">
                         <div className="flex flex-wrap gap-4">
                           <span>⏱ {duration}</span>
                           <span>⭐ {rating}</span>
                         </div>
                         {ep.overview && (
-                          <p className="text-gray-400 line-clamp-3">
+                          <p className="text-gray-100 line-clamp-3">
                             {ep.overview}
                           </p>
                         )}
