@@ -47,7 +47,7 @@ export const Menu = () => {
         {/* Menu (desktop) */}
         <div className="hidden md:flex justify-between items-center flex-wrap">
           <div className="flex gap-4">
-            <NavLink to="/" className={styleNavLink}>
+            <NavLink to="/" end className={styleNavLink}>
               Головна
             </NavLink>
             <NavLink to="/movies" className={styleNavLink}>
@@ -77,6 +77,7 @@ export const Menu = () => {
           <div className="md:hidden flex flex-col gap-4 mt-4">
             <NavLink
               to="/"
+              end
               className={styleNavLink}
               onClick={() => setIsMenuOpen(false)}>
               Головна
